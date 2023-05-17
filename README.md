@@ -1,4 +1,4 @@
-# Elastic Inventory
+# Unity Elastic Inventory
 
 A simple inventory micro-framework built with extendability in mind
 
