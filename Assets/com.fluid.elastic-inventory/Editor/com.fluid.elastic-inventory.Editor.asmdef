@@ -1,0 +1,12 @@
+{
+    "name": "com.fluid.elastic-inventory.Editor",
+    "references": [
+        "com.fluid.elastic-inventory"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

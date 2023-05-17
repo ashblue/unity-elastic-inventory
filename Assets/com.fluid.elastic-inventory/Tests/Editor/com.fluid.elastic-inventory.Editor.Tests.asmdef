@@ -1,0 +1,19 @@
+{
+    "name": "com.fluid.elastic-inventory.Editor.Tests",
+    "references": [
+        "com.fluid.elastic-inventory",
+        "com.fluid.elastic-inventory.Editor"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

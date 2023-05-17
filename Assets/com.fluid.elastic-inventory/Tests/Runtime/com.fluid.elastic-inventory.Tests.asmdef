@@ -1,0 +1,16 @@
+{
+    "name": "com.fluid.elastic-inventory.Tests",
+    "references": [
+        "com.fluid.elastic-inventory"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
