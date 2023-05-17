@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7eda25e41964b24fb6b9fb1353e5966, type: 3}
+  m_Name: MineKey
+  m_EditorClassIdentifier: 
+  _id: ce03c95a-1601-4a13-9020-9582e7cd08ab
+  _displayName: Mine Key
+  _image: {fileID: 21300000, guid: 164656eebbd2f4832b671fdffbaa2179, type: 3}
+  _cost: 0
+  _description: The Veinseeker Key, a symbol of authority and perseverance, is a
+    legendary artifact crafted specifically for the unfathomable depths of the Crystalline
+    Caverns.
+  _category: 1

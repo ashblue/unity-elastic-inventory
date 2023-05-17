@@ -1,7 +1,19 @@
 {
     "name": "com.fluid.elastic-inventory",
-    "references": [],
-    "optionalUnityReferences": [],
+    "rootNamespace": "",
+    "references": [
+        "GUID:384c6e7b6222f064b93d685dcbd43f93",
+        "GUID:de83a3ca544d84ef3837e878896f66e9",
+        "GUID:5d226a1776aa442e788ca15f9d2a42d0",
+        "GUID:424539e03b77bb047a96fa8c6ab1fe20"
+    ],
     "includePlatforms": [],
-    "excludePlatforms": []
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

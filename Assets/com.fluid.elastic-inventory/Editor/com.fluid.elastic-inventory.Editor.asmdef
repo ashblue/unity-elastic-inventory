@@ -1,12 +1,19 @@
 {
     "name": "com.fluid.elastic-inventory.Editor",
+    "rootNamespace": "",
     "references": [
-        "com.fluid.elastic-inventory"
+        "com.fluid.elastic-inventory",
+        "com.fluid.simple-settings"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [
         "Editor"
     ],
     "excludePlatforms": [],
-    "allowUnsafeCode": false
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
