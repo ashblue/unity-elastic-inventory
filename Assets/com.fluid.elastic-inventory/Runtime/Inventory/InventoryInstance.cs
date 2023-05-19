@@ -13,18 +13,22 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
         public IItemEntry Get(IItemDefinition item) {
             _entries.TryGetValue(item, out var entry);
+            
             return entry;
         }
 
-        public void Add(IItemDefinition item, int quantity = 1) {
-            if (item == null || quantity < 1) return;
+        public IItemEntry Add(IItemDefinition item, int quantity = 1) {
+            if (item == null) return null;
 
             if (_entries.TryGetValue(item, out var existingEntry)) {
                 existingEntry.SetQuantity(existingEntry.Quantity + quantity);
-                return;
+                return existingEntry;
             }
 
-            _entries.Add(item, new ItemEntry(item, quantity));
+            var entry = item.CreateItemEntry(quantity);
+            _entries.Add(item, entry);
+
+            return entry;
         }
 
         public bool Has (IItemDefinition item, int quantity = 1) {
