@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 namespace CleverCrow.Fluid.ElasticInventory {
-    public class InventoryInstance {
+    public class InventoryInstance : IInventoryInstance {
         private readonly Dictionary<IItemDefinition, IItemEntry> _entries = new Dictionary<IItemDefinition, IItemEntry>();
         private readonly IItemDatabase _database;
 
@@ -33,16 +33,14 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
         public bool Has (IItemDefinition item, int quantity = 1) {
             var entry = Get(item);
-            if (entry == null || entry.Quantity < quantity) return false;
-
-            return true;
+            return entry != null && entry.Quantity >= quantity;
         }
 
-        public void Remove (IItemDefinition item) {
+        public void Remove (IItemDefinition item, int quantity = 1) {
             var entry = _entries[item];
 
-            if (entry.Quantity > 1) {
-                entry.SetQuantity(entry.Quantity - 1);
+            if (entry.Quantity > quantity) {
+                entry.SetQuantity(entry.Quantity - quantity);
                 return;
             }
 

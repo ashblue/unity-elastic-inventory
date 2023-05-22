@@ -160,6 +160,28 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
 
                 Assert.IsTrue(inventory.Has(item));
             }
+
+            [Test]
+            public void It_should_remove_multiple_items () {
+                var item = A.ItemDefinition().Build();
+                var inventory = Setup();
+
+                inventory.Add(item, 2);
+                inventory.Remove(item, 2);
+
+                Assert.IsFalse(inventory.Has(item));
+            }
+
+            [Test]
+            public void It_should_remove_the_item_entry_when_removing_all_items_of_two_quantity () {
+                var item = A.ItemDefinition().Build();
+                var inventory = Setup();
+
+                inventory.Add(item, 2);
+                inventory.Remove(item, 2);
+
+                Assert.IsFalse(inventory.Has(item, 0));
+            }
         }
 
         public class Save_Method : InventoryInstanceTest {
