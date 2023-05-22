@@ -205,6 +205,27 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 Assert.AreEqual(expectedSave, save);
             }
         }
+
+        public class Load_Method : InventoryInstanceTest {
+            [Test]
+            public void It_should_load_inventory_items_from_a_save () {
+                var id = "a";
+                var quantity = 1;
+                var definition = A.ItemDefinition().WithId(id).Build();
+
+                var database = Substitute.For<IItemDatabase>();
+                database.Get(id).Returns(definition);
+
+                var inventory = Setup(database);
+                inventory.Add(definition);
+                var save = inventory.Save();
+
+                var newInventory = Setup(database);
+                newInventory.Load(save);
+
+                Assert.IsTrue(newInventory.Has(definition));
+            }
+        }
     }
 }
 
