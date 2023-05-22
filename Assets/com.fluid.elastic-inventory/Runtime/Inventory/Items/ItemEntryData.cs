@@ -1,9 +1,11 @@
 using UnityEngine;
 
 namespace CleverCrow.Fluid.ElasticInventory {
-    // A re-usable class for visually representing item entries in the inspector
+    /// <summary>
+    /// A re-usable class for visually representing item entries in the inspector
+    /// </summary>
     [System.Serializable]
-    public class ItemEntryDefinition {
+    public class ItemEntryData {
         [SerializeField]
         private ItemDefinitionBase _definition;
 

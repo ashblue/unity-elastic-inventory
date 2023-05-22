@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NUnit.Framework;
@@ -6,9 +5,6 @@ using NSubstitute;
 
 namespace CleverCrow.Fluid.ElasticInventory.Testing {
     public class InventoryInstanceTest {
-        private class Options {
-            public IItemDatabase database = Substitute.For<IItemDatabase>();
-        }
 
         private InventoryInstance Setup(IItemDatabase database = null) {
             if (database == null) {
@@ -145,7 +141,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
         public class Remove_Method : InventoryInstanceTest {
             [Test]
             public void It_should_remove_the_item_entry () {
-                var item = Substitute.For<IItemDefinition>();
+                var item = A.ItemDefinition().Build();
                 var inventory = Setup();
 
                 inventory.Add(item);
@@ -156,13 +152,35 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
 
             [Test]
             public void It_should_reduce_the_item_count_when_removing_two () {
-                var item = Substitute.For<IItemDefinition>();
+                var item = A.ItemDefinition().Build();
                 var inventory = Setup();
 
                 inventory.Add(item, 2);
                 inventory.Remove(item);
 
                 Assert.IsTrue(inventory.Has(item));
+            }
+        }
+
+        public class Save_Method : InventoryInstanceTest {
+            [Test]
+            public void It_should_save_the_inventory_entries_to_a_string () {
+                var id = "a";
+                var quantity = 1;
+                var definition = A.ItemDefinition().WithId(id).Build();
+
+                var saveData = new InventorySaveData {
+                    items = new List<string> {
+                        new ItemEntry(definition, quantity).Save(),
+                    },
+                };
+                var expectedSave = JsonUtility.ToJson(saveData);
+
+                var inventory = Setup();
+                inventory.Add(definition, quantity);
+                var save = inventory.Save();
+
+                Assert.AreEqual(expectedSave, save);
             }
         }
     }

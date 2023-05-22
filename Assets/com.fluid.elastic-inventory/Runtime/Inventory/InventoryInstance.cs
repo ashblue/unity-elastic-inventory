@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace CleverCrow.Fluid.ElasticInventory {
@@ -13,7 +13,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
         public IItemEntryReadOnly Get(IItemDefinition item) {
             _entries.TryGetValue(item, out var entry);
-            
+
             return entry;
         }
 
@@ -34,7 +34,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public bool Has (IItemDefinition item, int quantity = 1) {
             var entry = Get(item);
             if (entry == null || entry.Quantity < quantity) return false;
-            
+
             return true;
         }
 
@@ -47,6 +47,16 @@ namespace CleverCrow.Fluid.ElasticInventory {
             }
 
             _entries.Remove(item);
+        }
+
+        public string Save () {
+            var data = new InventorySaveData {
+                items = _entries
+                    .Select(e => e.Value.Save())
+                    .ToList(),
+            };
+
+            return JsonUtility.ToJson(data);
         }
     }
 }
