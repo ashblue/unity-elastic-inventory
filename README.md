@@ -23,6 +23,43 @@ Elastic Inventory is used through [Unity's Package Manager](https://docs.unity3d
 }
 ```
 
+## Documentation
+
+### Custom Item Definitions
+
+Custom item definitions can be created to add your own unique serialized fields. For example you might want a weapon with damage and range. You can do so with the following snippet.
+
+```C#
+// Sample custom item goes here
+```
+
+#### How to modify custom items at runtime
+
+While custom inventory definitions do allow you to add your own fields. You cannot modify them at runtime. If you do so changes will be lost on save and load. You can easily get around this by referencing the item definition and modifying it with a wrapper.
+
+For example let's say you have a weapon with modifiable slots for accessories. Instead of saving the changes to the entry or definition. You'll want to add the modifications onto your character that has the weapon. This way you can save/load the character and the weapon will still have the expected modifications.
+
+```C#
+public class WeaponInstance {
+    public WeaponDefinition definition;
+    public WeaponAccessoryDefinition slotA;
+    public WeaponAccessoryDefinition slotB;
+    public WeaponAccessoryDefinition slotC;
+    
+    public string Save () {
+        // your logic here
+    }
+    
+    public void Load (string data) {
+        // your logic here
+    }
+}
+```
+
+The bottom line here is item definitions are runtime static. If you want to modify them you should write a wrapper around definition / entry instead of modifying it directly.
+
+```C#
+
 ## Releases
 
 Archives of specific versions and release notes are available on the [releases page](https://github.com/ashblue/unity-elastic-inventory/releases).

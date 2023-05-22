@@ -192,8 +192,11 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 var definition = A.ItemDefinition().WithId(id).Build();
 
                 var saveData = new InventorySaveData {
-                    items = new List<string> {
-                        new ItemEntry(definition, quantity).Save(),
+                    items = new List<ItemEntrySaveData> {
+                        new() {
+                            definitionId = id,
+                            quantity = quantity,
+                        },
                     },
                 };
                 var expectedSave = JsonUtility.ToJson(saveData);
@@ -202,6 +205,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 inventory.Add(definition, quantity);
                 var save = inventory.Save();
 
+                Assert.IsNotEmpty(save);
                 Assert.AreEqual(expectedSave, save);
             }
         }

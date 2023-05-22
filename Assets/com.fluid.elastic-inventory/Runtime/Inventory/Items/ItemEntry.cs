@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace CleverCrow.Fluid.ElasticInventory {
     // @TODO Item entry will need to come from a base class with overridable methods
     // This way the save, load, and additional fields can be handled on a case by case basis
@@ -14,21 +12,6 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
         public void SetQuantity(int quantity) {
             Quantity = quantity;
-        }
-
-        public string Save() {
-            return JsonUtility.ToJson(new ItemEntrySaveData {
-                definitionId = Definition.Id,
-                quantity = Quantity,
-            });
-        }
-
-        public void Load(string save, IItemDatabase database) {
-            var data = JsonUtility.FromJson<ItemEntrySaveData>(save);
-            var definition = database.Get(data.definitionId);
-
-            Definition = definition;
-            Quantity = data.quantity;
         }
     }
 }

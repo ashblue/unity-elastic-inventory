@@ -52,7 +52,10 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public string Save () {
             var data = new InventorySaveData {
                 items = _entries
-                    .Select(e => e.Value.Save())
+                    .Select(e => new ItemEntrySaveData {
+                        definitionId = e.Value.Definition.Id,
+                        quantity = e.Value.Quantity,
+                    })
                     .ToList(),
             };
 
@@ -62,11 +65,9 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public void Load (string save) {
             var data = JsonUtility.FromJson<InventorySaveData>(save);
 
-            data.items.ForEach(itemSave => {
-                var entryData = JsonUtility.FromJson<ItemEntrySaveData>(itemSave);
+            data.items.ForEach(entryData => {
                 var definition = _database.Get(entryData.definitionId);
                 var entry = definition.CreateItemEntry();
-                entry.Load(itemSave, _database);
 
                 _entries.Add(definition, entry);
             });

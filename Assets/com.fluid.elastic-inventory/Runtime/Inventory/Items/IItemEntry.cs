@@ -9,7 +9,5 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
     public interface IItemEntry : IItemEntryReadOnly {
         void SetQuantity (int quantity);
-        string Save ();
-        void Load (string save, IItemDatabase database);
     }
 }
