@@ -72,5 +72,9 @@ namespace CleverCrow.Fluid.ElasticInventory {
                 _entries.Add(definition, entry);
             });
         }
+
+        public List<IItemEntryReadOnly> GetAll () {
+            return _entries.Values.ToList<IItemEntryReadOnly>();
+        }
     }
 }

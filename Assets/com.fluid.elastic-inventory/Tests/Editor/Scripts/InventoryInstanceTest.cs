@@ -184,6 +184,19 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
             }
         }
 
+        public class GetAll_Method : InventoryInstanceTest {
+            [Test]
+            public void It_should_return_all_added_item_entries () {
+                var definition = A.ItemDefinition().Build();
+                var inventory = Setup();
+
+                inventory.Add(definition);
+                var entries = inventory.GetAll();
+
+                Assert.AreEqual(1, entries.Count);
+            }
+        }
+
         public class Save_Method : InventoryInstanceTest {
             [Test]
             public void It_should_save_the_inventory_entries_to_a_string () {
