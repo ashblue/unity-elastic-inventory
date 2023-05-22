@@ -1,9 +1,13 @@
 namespace CleverCrow.Fluid.ElasticInventory {
-    public interface IItemEntry {
+    /// <summary>
+    /// A read only safe interface wrapper to prevent accidentally editing item entries outside of inventory instances
+    /// </summary>
+    public interface IItemEntryReadOnly {
         IItemDefinition Definition { get; }
         int Quantity { get; }
+    }
 
+    public interface IItemEntry : IItemEntryReadOnly {
         void SetQuantity (int quantity);
     }
 }
-    

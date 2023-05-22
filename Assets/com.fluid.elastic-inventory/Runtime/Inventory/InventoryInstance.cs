@@ -11,13 +11,13 @@ namespace CleverCrow.Fluid.ElasticInventory {
             _database = database;
         }
 
-        public IItemEntry Get(IItemDefinition item) {
+        public IItemEntryReadOnly Get(IItemDefinition item) {
             _entries.TryGetValue(item, out var entry);
             
             return entry;
         }
 
-        public IItemEntry Add(IItemDefinition item, int quantity = 1) {
+        public IItemEntryReadOnly Add(IItemDefinition item, int quantity = 1) {
             if (item == null) return null;
 
             if (_entries.TryGetValue(item, out var existingEntry)) {
@@ -36,6 +36,17 @@ namespace CleverCrow.Fluid.ElasticInventory {
             if (entry == null || entry.Quantity < quantity) return false;
             
             return true;
+        }
+
+        public void Remove (IItemDefinition item) {
+            var entry = _entries[item];
+
+            if (entry.Quantity > 1) {
+                entry.SetQuantity(entry.Quantity - 1);
+                return;
+            }
+
+            _entries.Remove(item);
         }
     }
 }
