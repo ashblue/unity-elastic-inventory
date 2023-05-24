@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="./PageItemDatabase.uss" />
+
+    <ui:VisualElement class="toolbar">
+        <ui:Label name="title" class="toolbar__title" text="Lorem Ipsum" />
+        <ui:VisualElement style="flex-direction: row;">
+            <ui:Label text="Search" style="flex-grow: 0; color: grey;" name="placeholderLabel" />
+            <ui:TextField class="toolbar__search" name="textField" />
+        </ui:VisualElement>
+        <ui:DropdownField name="add" choices="Add,Inventory Definition,Longer Definition,Test" />
+        <ui:DropdownField name="add" choices="All,Generic,Hidden,Equipment,Recipes" />
+    </ui:VisualElement>
+
+    <ui:ScrollView>
+        <ui:VisualElement class="table" name="table">
+            <ui:VisualElement class="table__row">
+                <ui:VisualElement style="flex-direction: row; align-items: center;">
+                    <ui:Image name="imageElement" style="width: 20px; height: 20px;" />
+                    <ui:Label style="margin-left: 5px" text="Item Name" />
+                </ui:VisualElement>
+
+                <ui:VisualElement style="flex-direction: row;">
+                    <ui:Button text="Edit" />
+                    <ui:Button text="Delete" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="table__row">
+                <ui:VisualElement style="flex-direction: row; align-items: center;">
+                    <ui:Image name="imageElement" style="width: 20px; height: 20px;" />
+                    <ui:Label style="margin-left: 5px" text="Item Name" />
+                </ui:VisualElement>
+
+                <ui:VisualElement style="flex-direction: row;">
+                    <ui:Button text="Edit" />
+                    <ui:Button text="Delete" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="table__row">
+                <ui:VisualElement style="flex-direction: row; align-items: center;">
+                    <ui:Image name="imageElement" style="width: 20px; height: 20px;" />
+                    <ui:Label style="margin-left: 5px" text="Item Name" />
+                </ui:VisualElement>
+
+                <ui:VisualElement style="flex-direction: row;">
+                    <ui:Button text="Edit" />
+                    <ui:Button text="Delete" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="table__row">
+                <ui:VisualElement style="flex-direction: row; align-items: center;">
+                    <ui:Image name="imageElement" style="width: 20px; height: 20px;" />
+                    <ui:Label style="margin-left: 5px" text="Item Name" />
+                </ui:VisualElement>
+
+                <ui:VisualElement style="flex-direction: row;">
+                    <ui:Button text="Edit" />
+                    <ui:Button text="Delete" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="table__row">
+                <ui:VisualElement style="flex-direction: row; align-items: center;">
+                    <ui:Image name="imageElement" style="width: 20px; height: 20px;" />
+                    <ui:Label style="margin-left: 5px" text="Item Name" />
+                </ui:VisualElement>
+
+                <ui:VisualElement style="flex-direction: row;">
+                    <ui:Button text="Edit" />
+                    <ui:Button text="Delete" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="table__row">
+                <ui:VisualElement style="flex-direction: row; align-items: center;">
+                    <ui:Image name="imageElement" style="width: 20px; height: 20px;" />
+                    <ui:Label style="margin-left: 5px" text="Item Name" />
+                </ui:VisualElement>
+
+                <ui:VisualElement style="flex-direction: row;">
+                    <ui:Button text="Edit" />
+                    <ui:Button text="Delete" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="table__row">
+                <ui:VisualElement style="flex-direction: row; align-items: center;">
+                    <ui:Image name="imageElement" style="width: 20px; height: 20px;" />
+                    <ui:Label style="margin-left: 5px" text="Item Name" />
+                </ui:VisualElement>
+
+                <ui:VisualElement style="flex-direction: row;">
+                    <ui:Button text="Edit" />
+                    <ui:Button text="Delete" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="table__row">
+                <ui:VisualElement style="flex-direction: row; align-items: center;">
+                    <ui:Image name="imageElement" style="width: 20px; height: 20px;" />
+                    <ui:Label style="margin-left: 5px" text="Item Name" />
+                </ui:VisualElement>
+
+                <ui:VisualElement style="flex-direction: row;">
+                    <ui:Button text="Edit" />
+                    <ui:Button text="Delete" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="table__row">
+                <ui:VisualElement style="flex-direction: row; align-items: center;">
+                    <ui:Image name="imageElement" style="width: 20px; height: 20px;" />
+                    <ui:Label style="margin-left: 5px" text="Item Name" />
+                </ui:VisualElement>
+
+                <ui:VisualElement style="flex-direction: row;">
+                    <ui:Button text="Edit" />
+                    <ui:Button text="Delete" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>
