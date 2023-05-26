@@ -1,0 +1,19 @@
+.item-entry {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    border-bottom-color: #000;
+    border-bottom-width: 1px;
+}
+
+.item-entry__section {
+    flex-direction: row;
+    align-items: center;
+}
+
+.item-entry__image {
+    width: 20px;
+    height: 20px;
+}

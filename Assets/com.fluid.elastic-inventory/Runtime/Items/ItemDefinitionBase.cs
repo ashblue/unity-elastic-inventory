@@ -8,8 +8,12 @@ namespace CleverCrow.Fluid.ElasticInventory {
         [SerializeField]
         string _displayName;
 
+        [SerializeField]
+        Sprite _image;
+
         public string Id => _id;
         public string DisplayName => _displayName;
+        public Sprite Image => _image;
 
         public virtual IItemEntry CreateItemEntry (int quantity = 1) {
             return new ItemEntry(this, quantity);

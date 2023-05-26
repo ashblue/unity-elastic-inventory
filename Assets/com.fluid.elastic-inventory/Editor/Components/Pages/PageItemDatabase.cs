@@ -9,30 +9,26 @@ using Object = UnityEngine.Object;
 
 namespace CleverCrow.Fluid.ElasticInventory.Editors {
     public class PageItemDatabase : ComponentBase {
-        readonly DropdownAdd<Type> _dropdownAdd;
-        readonly DropdownAdd<string> _dropdownCategory;
-
         public PageItemDatabase (VisualElement container, ItemDatabase database) : base(container) {
+            CreateHeader(container, database);
+
+            database._definitions.ForEach(AddItemElement);
+        }
+
+        void CreateHeader (VisualElement container, ItemDatabase database) {
             container.Q<Label>("title").text = database.name;
 
-            var allImages = container.Query<Image>("imageElement").ToList();
-            foreach (var img in allImages) {
-                img.image = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/PlaceholderImage.png");
-            }
-
             var displayNameToClass = GetDefinitionDisplayNameToClass();
-            _dropdownAdd = new DropdownAdd<Type>(container.Q<VisualElement>("add"), "Add", displayNameToClass);
-            _dropdownAdd.BindClick((Type type) => {
-                CreateItemDefinition(database, type);
-                // @TODO Inject the row visually
-            });
+            var dropdownAdd = new DropdownAdd<Type>(container.Q<VisualElement>("add"), "Add", displayNameToClass);
+            dropdownAdd.BindClick((Type type) => { CreateItemDefinition(database, type); });
 
-            _dropdownCategory = new DropdownAdd<string>(container.Q<VisualElement>("category"), "Category", new List<KeyValuePair<string, string>> {
-                new("Generic", "Generic"),
-                new("Weapon", "Weapon"),
-                new("Armor", "Armor"),
-            });
-            _dropdownCategory.BindClick((string category) => {
+            var dropdownCategory = new DropdownAdd<string>(container.Q<VisualElement>("category"), "Category",
+                new List<KeyValuePair<string, string>> {
+                    new("Generic", "Generic"),
+                    new("Weapon", "Weapon"),
+                    new("Armor", "Armor"),
+                });
+            dropdownCategory.BindClick((string category) => {
                 // CreateCategory(database, category);
             });
         }
@@ -77,6 +73,13 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             EditorUtility.SetDirty(database);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+
+            AddItemElement(itemDefinition as ItemDefinitionBase);
+        }
+
+        private void AddItemElement (ItemDefinitionBase itemDefinition) {
+            var table = _container.Q<VisualElement>("table");
+            new ItemEntry(table, itemDefinition);
         }
 
         private static string GetSelectedFolderPath () {

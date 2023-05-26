@@ -6,8 +6,10 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
         readonly DropdownField _dropdown;
         readonly List<KeyValuePair<string, T>> _choices;
         readonly string _addText;
+        readonly VisualElement _containerParent;
 
-        public DropdownAdd (VisualElement container, string addText, List<KeyValuePair<string, T>> choices) : base(container) {
+        public DropdownAdd (VisualElement containerParent, string addText, List<KeyValuePair<string, T>> choices) : base(containerParent) {
+            _containerParent = containerParent;
             _choices = choices;
             _addText = addText;
             var keys = choices.ConvertAll(choice => choice.Key);
@@ -32,7 +34,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
                 value = _addText
             };
 
-            _container.Add(dropdown);
+            _containerParent.Add(dropdown);
 
             return dropdown;
         }

@@ -7,9 +7,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
         private readonly string _path;
         protected readonly VisualElement _container;
 
-        protected ComponentBase (VisualElement container) {
-            _container = container;
-
+        protected ComponentBase (VisualElement containerParent) {
             if (_path == null) {
                 var stackTrace = new System.Diagnostics.StackTrace(true);
                 var frame = stackTrace.GetFrame(1);
@@ -27,7 +25,10 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             }
 
             var markup = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(_path);
-            if (markup != null) markup.CloneTree(container);
+            if (markup != null) {
+                markup.CloneTree(containerParent);
+                _container = containerParent[containerParent.childCount - 1];
+            }
         }
     }
 }

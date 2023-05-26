@@ -16,13 +16,3 @@
 .table {
     padding: 5px;
 }
-
-.table__row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px;
-    border-bottom-color: #000;
-    border-bottom-width: 1px;
-}
