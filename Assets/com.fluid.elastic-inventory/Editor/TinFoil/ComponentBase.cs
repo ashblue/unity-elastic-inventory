@@ -27,7 +27,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             }
 
             var markup = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(_path);
-            markup.CloneTree(container);
+            if (markup != null) markup.CloneTree(container);
         }
     }
 }

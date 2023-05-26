@@ -1,5 +1,4 @@
 using UnityEditor;
-using UnityEngine.UIElements;
 
 namespace CleverCrow.Fluid.ElasticInventory.Editors {
     public class ItemDatabaseWindow : EditorWindow {
@@ -27,16 +26,5 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             var root = rootVisualElement;
             _page = new PageItemDatabase(root, _database);
         }
-
-        // private void OnGUI () {
-        //     if (_database == null) return;
-        //
-        //     EditorGUILayout.LabelField(_database.name);
-        //
-        //     var items = _database._definitions;
-        //     foreach (var item in items) {
-        //         EditorGUILayout.LabelField(item.name);
-        //     }
-        // }
     }
 }
