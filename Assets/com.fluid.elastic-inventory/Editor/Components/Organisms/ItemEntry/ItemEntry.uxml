@@ -4,8 +4,7 @@
 
     <ui:VisualElement name="item-entry" class="item-entry">
         <ui:VisualElement class="item-entry__section">
-            <ui:Image name="item-entry__image" class="item-entry__image" />
-            <ui:Label name="item-entry__name" style="margin-left: 5px" text="Item Name" />
+            <ui:Label name="item-entry__name" text="Item Name" />
         </ui:VisualElement>
 
         <ui:VisualElement class="item-entry__section">
