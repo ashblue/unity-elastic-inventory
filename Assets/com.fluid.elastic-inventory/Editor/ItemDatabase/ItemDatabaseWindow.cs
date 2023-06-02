@@ -4,7 +4,6 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
     public class ItemDatabaseWindow : EditorWindow {
         static ItemDatabase _database;
         const string _databasePathKey = "ElasticInventoryPath";
-        PageItemDatabase _page;
 
         [MenuItem("Window/Elastic Inventory/Item Database")]
         public static void ShowWindow (ItemDatabase database) {
@@ -12,8 +11,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             var assetPath = AssetDatabase.GetAssetPath(database);
             EditorPrefs.SetString(_databasePathKey, assetPath);
 
-            GetWindow<ItemDatabaseWindow>("Item Database");
-
+            RefreshWindow();
         }
 
         private void OnEnable () {
@@ -22,9 +20,15 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
                 _database = AssetDatabase.LoadAssetAtPath<ItemDatabase>(assetPath);
             }
 
-            rootVisualElement.Clear();
-            var root = rootVisualElement;
-            _page = new PageItemDatabase(root, _database);
+            RefreshWindow();
+        }
+
+        private static void RefreshWindow () {
+            var window = GetWindow<ItemDatabaseWindow>("Item Database");
+
+            window.rootVisualElement.Clear();
+            var root = window.rootVisualElement;
+            new PageItemDatabase(root, _database);
         }
     }
 }
