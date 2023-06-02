@@ -9,9 +9,12 @@ using Object = UnityEngine.Object;
 
 namespace CleverCrow.Fluid.ElasticInventory.Editors {
     public class PageItemDatabase : ComponentBase {
+        readonly ItemDatabase _database;
+
         public PageItemDatabase (VisualElement container, ItemDatabase database) : base(container) {
             CreateHeader(container, database);
 
+            _database = database;
             database._definitions.ForEach(AddItemElement);
         }
 
@@ -28,8 +31,9 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
                     new("Weapon", "Weapon"),
                     new("Armor", "Armor"),
                 });
-            dropdownCategory.BindClick((string category) => {
-                // CreateCategory(database, category);
+
+            dropdownCategory.BindClick(category => {
+                Debug.Log($"Handle category logic here: {category}");
             });
         }
 
@@ -79,7 +83,18 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
 
         private void AddItemElement (ItemDefinitionBase itemDefinition) {
             var table = _container.Q<VisualElement>("table");
-            new ItemEntry(table, itemDefinition);
+            new ItemEntry(table, itemDefinition, DeleteItemFromDatabase);
+        }
+
+        private void DeleteItemFromDatabase (ItemDefinitionBase itemDefinition) {
+            _database._definitions.Remove(itemDefinition);
+            EditorUtility.SetDirty(_database);
+
+            var path = AssetDatabase.GetAssetPath(itemDefinition);
+            AssetDatabase.DeleteAsset(path);
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 
         private static string GetSelectedFolderPath () {
