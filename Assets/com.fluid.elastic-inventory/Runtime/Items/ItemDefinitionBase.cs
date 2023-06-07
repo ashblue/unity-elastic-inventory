@@ -16,6 +16,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public Sprite Image => _image;
         public bool Unique => false;
 
+        // @TODO Remove this method as virtual in favor an overridable property for the item entry base class
         public virtual IItemEntry CreateItemEntry (int quantity = 1, string id = null) {
             return new ItemEntry(this, quantity, id);
         }
