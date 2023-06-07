@@ -10,7 +10,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
         private ItemDefinitionBase _definition;
 
         [SerializeField]
-        private int _quantity;
+        private int _quantity = 1;
 
         public IItemDefinition Definition => _definition;
         public int Quantity => _quantity;

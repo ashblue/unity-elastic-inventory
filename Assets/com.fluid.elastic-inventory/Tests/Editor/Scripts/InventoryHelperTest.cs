@@ -85,8 +85,19 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
         }
 
         public class SaveMethod : InventoryHelperTest {
+            [Test]
             public void It_should_save_the_current_inventory_data_to_the_database () {
+                var instanceId = "inventory_instance";
+                var globalDatabase = Substitute.For<IDatabaseInstance>();
+                var item = A.ItemDefinition().Build();
+                var itemDatabase = Substitute.For<IItemDatabase>();
+                itemDatabase.Get(item.Id).Returns(item);
 
+                var helper = Setup(id: instanceId, itemDatabase: itemDatabase, globalDatabase: globalDatabase);
+                helper.Instance.Add(item);
+                helper.Save();
+
+                globalDatabase.Strings.Received(1).Set(instanceId, helper.Instance.Save());
             }
         }
     }
