@@ -14,5 +14,6 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
         public IItemDefinition Definition => _definition;
         public int Quantity => _quantity;
+        public string Id => null;
     }
 }

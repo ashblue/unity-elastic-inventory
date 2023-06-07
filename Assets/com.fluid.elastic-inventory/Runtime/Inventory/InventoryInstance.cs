@@ -7,6 +7,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
         // @TODO Entry keys will need to support a random ID instead so multiple item entries can be supported (like gear)
         // Or we will need a separate list for storing unique item entries?
         private readonly Dictionary<IItemDefinition, IItemEntry> _entries = new();
+        private readonly List<IItemEntry> _uniqueEntries = new();
         private readonly IItemDatabase _database;
 
         public InventoryInstance (IItemDatabase database) {
@@ -21,6 +22,13 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
         public IItemEntryReadOnly Add(IItemDefinition item, int quantity = 1) {
             if (item == null) return null;
+
+            if (item.Unique) {
+                var unique = item.CreateItemEntry();
+                _uniqueEntries.Add(unique);
+
+                return unique;
+            }
 
             if (_entries.TryGetValue(item, out var existingEntry)) {
                 existingEntry.SetQuantity(existingEntry.Quantity + quantity);
@@ -38,6 +46,11 @@ namespace CleverCrow.Fluid.ElasticInventory {
             return entry != null && entry.Quantity >= quantity;
         }
 
+        public bool Has (string id) {
+            var entry = _uniqueEntries.FirstOrDefault(e => e.Id == id);
+            return entry != null;
+        }
+
         public void Remove (IItemDefinition item, int quantity = 1) {
             var entry = _entries[item];
 
@@ -47,6 +60,10 @@ namespace CleverCrow.Fluid.ElasticInventory {
             }
 
             _entries.Remove(item);
+        }
+
+        public void Remove (string id) {
+            _uniqueEntries.Remove(_uniqueEntries.First(e => e.Id == id));
         }
 
         public string Save () {
@@ -67,14 +84,18 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
             data.items.ForEach(entryData => {
                 var definition = _database.Get(entryData.definitionId);
-                var entry = definition.CreateItemEntry();
+                var entry = definition.CreateItemEntry(entryData.quantity);
 
                 _entries.Add(definition, entry);
             });
         }
 
         public List<IItemEntryReadOnly> GetAll () {
-            return _entries.Values.ToList<IItemEntryReadOnly>();
+            var allEntries = new List<IItemEntryReadOnly>();
+            allEntries.AddRange(_uniqueEntries);
+            allEntries.AddRange(_entries.Values.ToList<IItemEntryReadOnly>());
+
+            return allEntries;
         }
     }
 }

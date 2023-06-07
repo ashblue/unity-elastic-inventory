@@ -60,127 +60,172 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
             }
         }
 
-        public class Add_Method : InventoryInstanceTest {
-            [Test]
-            public void It_should_not_error_if_null () {
-                var inventory = Setup();
+        public class Add_Method {
+            public class Default_Inventory_Items : InventoryInstanceTest {
+                [Test]
+                public void It_should_not_error_if_null () {
+                    var inventory = Setup();
 
-                Assert.DoesNotThrow(() => {
-                    inventory.Add(null);
-                });
+                    Assert.DoesNotThrow(() => {
+                        inventory.Add(null);
+                    });
+                }
+
+                [Test]
+                public void It_should_not_add_items_with_zero_quantity () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
+
+                    inventory.Add(item, 0);
+
+                    Assert.IsFalse(inventory.Has(item));
+                }
+
+                [Test]
+                public void It_should_add_an_item_entry_returned_from_the_definition_create_item_entry_method () {
+                    var itemEntry = Substitute.For<IItemEntry>();
+                    var item = A.ItemDefinition().WithItemEntry(itemEntry).Build();
+
+                    var inventory = Setup();
+                    inventory.Add(item);
+                    var result = inventory.Get(item);
+
+                    Assert.AreEqual(itemEntry, result);
+                }
+
+                [Test]
+                public void It_should_call_create_item_entry_with_the_passed_quantity () {
+                    var item = A.ItemDefinition().Build();
+
+                    var inventory = Setup();
+                    inventory.Add(item, 2);
+
+                    item.Received().CreateItemEntry(2);
+                }
             }
 
-            [Test]
-            public void It_should_not_add_items_with_zero_quantity () {
-                var item = A.ItemDefinition().Build();
-                var inventory = Setup();
+            public class Unique_Items : InventoryInstanceTest {
+                [Test]
+                public void It_should_add_two_unique_items_as_individual_entries () {
+                    var definition = A.ItemDefinition().WithUnique(true).Build();
+                    var inventory = Setup();
 
-                inventory.Add(item, 0);
+                    inventory.Add(definition);
+                    inventory.Add(definition);
 
-                Assert.IsFalse(inventory.Has(item));
-            }
-
-            [Test]
-            public void It_should_add_an_item_entry_returned_from_the_definition_create_item_entry_method () {
-                var itemEntry = Substitute.For<IItemEntry>();
-                var item = A.ItemDefinition().WithItemEntry(itemEntry).Build();
-
-                var inventory = Setup();
-                inventory.Add(item);
-                var result = inventory.Get(item);
-
-                Assert.AreEqual(itemEntry, result);
-            }
-
-            [Test]
-            public void It_should_call_create_item_entry_with_the_passed_quantity () {
-                var item = A.ItemDefinition().Build();
-
-                var inventory = Setup();
-                inventory.Add(item, 2);
-
-                item.Received().CreateItemEntry(2);
-            }
-        }
-
-        public class Has_Method : InventoryInstanceTest {
-            [Test]
-            public void It_should_return_true_if_the_item_is_in_the_inventory () {
-                var item = A.ItemDefinition().Build();
-                var inventory = Setup();
-
-                inventory.Add(item);
-                var result = inventory.Has(item);
-
-                Assert.IsTrue(result);
-            }
-
-            [Test]
-            public void It_should_return_false_if_the_item_is_not_in_the_inventory () {
-                var item = A.ItemDefinition().Build();
-                var inventory = Setup();
-
-                var result = inventory.Has(item);
-
-                Assert.IsFalse(result);
-            }
-
-            [Test]
-            public void It_should_return_false_if_the_item_quantity_is_not_in_the_inventory () {
-                var item = A.ItemDefinition().Build();
-                var quantity = 2;
-                var inventory = Setup();
-
-                inventory.Add(item);
-                var result = inventory.Has(item, quantity);
-
-                Assert.IsFalse(result);
+                    Assert.AreEqual(2, inventory.GetAll().Count);
+                }
             }
         }
 
-        public class Remove_Method : InventoryInstanceTest {
-            [Test]
-            public void It_should_remove_the_item_entry () {
-                var item = A.ItemDefinition().Build();
-                var inventory = Setup();
+        public class Has_Method {
+            public class DefaultItems : InventoryInstanceTest {
+                [Test]
+                public void It_should_return_true_if_the_item_is_in_the_inventory () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
 
-                inventory.Add(item);
-                inventory.Remove(item);
+                    inventory.Add(item);
+                    var result = inventory.Has(item);
 
-                Assert.IsFalse(inventory.Has(item));
+                    Assert.IsTrue(result);
+                }
+
+                [Test]
+                public void It_should_return_false_if_the_item_is_not_in_the_inventory () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
+
+                    var result = inventory.Has(item);
+
+                    Assert.IsFalse(result);
+                }
+
+                [Test]
+                public void It_should_return_false_if_the_item_quantity_is_not_in_the_inventory () {
+                    var item = A.ItemDefinition().Build();
+                    var quantity = 2;
+                    var inventory = Setup();
+
+                    inventory.Add(item);
+                    var result = inventory.Has(item, quantity);
+
+                    Assert.IsFalse(result);
+                }
             }
 
-            [Test]
-            public void It_should_reduce_the_item_count_when_removing_two () {
-                var item = A.ItemDefinition().Build();
-                var inventory = Setup();
+            public class UniqueItems : InventoryInstanceTest {
+                [Test]
+                public void It_should_return_true_if_the_item_is_in_the_inventory () {
+                    var item = A.ItemDefinition().WithUnique(true).Build();
+                    var inventory = Setup();
 
-                inventory.Add(item, 2);
-                inventory.Remove(item);
+                    var entry = inventory.Add(item);
+                    var result = inventory.Has(entry.Id);
 
-                Assert.IsTrue(inventory.Has(item));
+                    Assert.IsTrue(result);
+                }
+            }
+        }
+
+        public class Remove_Method {
+            public class DefaultItems : InventoryInstanceTest {
+                [Test]
+                public void It_should_remove_the_item_entry () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
+
+                    inventory.Add(item);
+                    inventory.Remove(item);
+
+                    Assert.IsFalse(inventory.Has(item));
+                }
+
+                [Test]
+                public void It_should_reduce_the_item_count_when_removing_two () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
+
+                    inventory.Add(item, 2);
+                    inventory.Remove(item);
+
+                    Assert.IsTrue(inventory.Has(item));
+                }
+
+                [Test]
+                public void It_should_remove_multiple_items () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
+
+                    inventory.Add(item, 2);
+                    inventory.Remove(item, 2);
+
+                    Assert.IsFalse(inventory.Has(item));
+                }
+
+                [Test]
+                public void It_should_remove_the_item_entry_when_removing_all_items_of_two_quantity () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
+
+                    inventory.Add(item, 2);
+                    inventory.Remove(item, 2);
+
+                    Assert.IsFalse(inventory.Has(item, 0));
+                }
             }
 
-            [Test]
-            public void It_should_remove_multiple_items () {
-                var item = A.ItemDefinition().Build();
-                var inventory = Setup();
+            public class UniqueItems : InventoryInstanceTest {
+                [Test]
+                public void It_should_remove_the_item_by_entry_id () {
+                    var definition = A.ItemDefinition().WithUnique(true).Build();
+                    var inventory = Setup();
 
-                inventory.Add(item, 2);
-                inventory.Remove(item, 2);
+                    var instance = inventory.Add(definition);
+                    inventory.Remove(instance.Id);
 
-                Assert.IsFalse(inventory.Has(item));
-            }
-
-            [Test]
-            public void It_should_remove_the_item_entry_when_removing_all_items_of_two_quantity () {
-                var item = A.ItemDefinition().Build();
-                var inventory = Setup();
-
-                inventory.Add(item, 2);
-                inventory.Remove(item, 2);
-
-                Assert.IsFalse(inventory.Has(item, 0));
+                    Assert.IsFalse(inventory.Has(instance.Id));
+                }
             }
         }
 
