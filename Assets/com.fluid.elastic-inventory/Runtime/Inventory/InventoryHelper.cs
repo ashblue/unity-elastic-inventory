@@ -19,7 +19,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
         [SerializeField]
         List<ItemEntryData> _startingItems;
 
-        public IInventoryInstance Instance => _internal.Instance;
+        public IInventoryInstance Instance => _internal?.Instance;
 
         void Start () {
             _internal = new InventoryHelperInternal(_id, _startingItems.ToList<IItemEntryReadOnly>(),
