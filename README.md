@@ -1,6 +1,6 @@
 # Unity Elastic Inventory
 
-A simple inventory micro-framework built with extendability in mind
+A Unity 3D inventory system that's designed as a micro-framework to drop in and go. Written with extendability, serialization, large scale projects, and to work with a wide range of game types. Use this library to stop constantly tweaking your inventory code and focus on making your game instead.
 
 ## Installation
 
