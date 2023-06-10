@@ -5,7 +5,6 @@ using NSubstitute;
 
 namespace CleverCrow.Fluid.ElasticInventory.Testing {
     public class InventoryInstanceTest {
-
         private InventoryInstance Setup(IItemDatabase database = null) {
             if (database == null) {
                 database = Substitute.For<IItemDatabase>();
@@ -14,49 +13,64 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
             return new InventoryInstance(database);
         }
 
-        public class Get_Method : InventoryInstanceTest {
-            [Test]
-            public void It_should_get_the_item_entry_after_adding_it () {
-                var item = A.ItemDefinition().Build();
-                var inventory = Setup();
+        public class Get_Method {
+            public class DefaultItems : InventoryInstanceTest {
+                [Test]
+                public void It_should_get_the_item_entry_after_adding_it () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
 
-                inventory.Add(item);
-                var entry = inventory.Get(item);
+                    inventory.Add(item);
+                    var entry = inventory.Get(item);
 
-                Assert.AreEqual(item, entry.Definition);
+                    Assert.AreEqual(item, entry.Definition);
+                }
+
+                [Test]
+                public void It_should_get_the_item_quantity_of_2_after_adding_it_twice () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
+
+                    inventory.Add(item);
+                    inventory.Add(item);
+                    var entry = inventory.Get(item);
+
+                    Assert.AreEqual(item, entry.Definition);
+                }
+
+                [Test]
+                public void It_should_get_the_item_quantity_of_1_after_adding_it () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
+
+                    inventory.Add(item);
+                    var entry = inventory.Get(item);
+
+                    Assert.AreEqual(1, entry.Quantity);
+                }
+
+                [Test]
+                public void It_should_not_fail_when_getting_a_missing_entry () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
+
+                    var entry = inventory.Get(item);
+
+                    Assert.IsNull(entry);
+                }
             }
 
-            [Test]
-            public void It_should_get_the_item_quantity_of_2_after_adding_it_twice () {
-                var item = A.ItemDefinition().Build();
-                var inventory = Setup();
+            public class UniqueItems : InventoryInstanceTest {
+                [Test]
+                public void It_should_return_an_item_instance_by_id_after_adding_it () {
+                    var item = A.ItemDefinition().WithUnique(true).Build();
+                    var inventory = Setup();
 
-                inventory.Add(item);
-                inventory.Add(item);
-                var entry = inventory.Get(item);
+                    var instance = inventory.Add(item);
+                    var result = inventory.Get(instance.Id);
 
-                Assert.AreEqual(item, entry.Definition);
-            }
-
-            [Test]
-            public void It_should_get_the_item_quantity_of_1_after_adding_it () {
-                var item = A.ItemDefinition().Build();
-                var inventory = Setup();
-
-                inventory.Add(item);
-                var entry = inventory.Get(item);
-
-                Assert.AreEqual(1, entry.Quantity);
-            }
-
-            [Test]
-            public void It_should_not_fail_when_getting_a_missing_entry () {
-                var item = A.ItemDefinition().Build();
-                var inventory = Setup();
-
-                var entry = inventory.Get(item);
-
-                Assert.IsNull(entry);
+                    Assert.AreEqual(instance, result);
+                }
             }
         }
 

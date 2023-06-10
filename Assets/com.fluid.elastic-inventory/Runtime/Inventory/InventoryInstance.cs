@@ -20,6 +20,10 @@ namespace CleverCrow.Fluid.ElasticInventory {
             return entry;
         }
 
+        public IItemEntryReadOnly Get(string id) {
+            return _uniqueEntries.FirstOrDefault(e => e.Id == id);
+        }
+
         public IItemEntryReadOnly Add(IItemDefinition item, int quantity = 1) {
             if (item == null) return null;
 

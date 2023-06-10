@@ -4,7 +4,7 @@ To create an editable an item that saves and loads you'll need to extend the Ite
 
 ```csharp
 // This is the data layer that is safe to edit at runtime
-public class ItemEntryWeapon : ItemEntryBase {
+public class ItemEntryWeapon : ItemEntryBase<ItemDefinitionWeapon> {
     public override bool Unique { get; } = true;
 
     public int Level { get; set; } = 1;
