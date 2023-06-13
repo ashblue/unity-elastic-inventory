@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using NUnit.Framework;
@@ -67,7 +68,18 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     var inventory = Setup();
 
                     var instance = inventory.Add(item);
-                    var result = inventory.Get(instance.Id);
+                    var result = inventory.GetUnique(instance.Id);
+
+                    Assert.AreEqual(instance, result);
+                }
+
+                [Test]
+                public void It_should_return_an_item_instance_by_definition_after_adding_it () {
+                    var item = A.ItemDefinition().WithUnique(true).Build();
+                    var inventory = Setup();
+
+                    var instance = inventory.Add(item);
+                    var result = inventory.Get(item);
 
                     Assert.AreEqual(instance, result);
                 }
@@ -175,7 +187,18 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     var inventory = Setup();
 
                     var entry = inventory.Add(item);
-                    var result = inventory.Has(entry.Id);
+                    var result = inventory.HasUnique(entry.Id);
+
+                    Assert.IsTrue(result);
+                }
+
+                [Test]
+                public void It_should_return_true_if_the_item_is_in_the_inventory_by_definition () {
+                    var item = A.ItemDefinition().WithUnique(true).Build();
+                    var inventory = Setup();
+
+                    inventory.Add(item);
+                    var result = inventory.Has(item);
 
                     Assert.IsTrue(result);
                 }
@@ -236,9 +259,17 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     var inventory = Setup();
 
                     var instance = inventory.Add(definition);
-                    inventory.Remove(instance.Id);
+                    inventory.RemoveUnique(instance.Id);
 
-                    Assert.IsFalse(inventory.Has(instance.Id));
+                    Assert.IsFalse(inventory.HasUnique(instance.Id));
+                }
+
+                [Test]
+                public void It_should_throw_an_error_if_you_try_to_remove_a_unique_item_by_definition () {
+                    var definition = A.ItemDefinition().WithUnique(true).Build();
+                    var inventory = Setup();
+
+                    Assert.Throws<ArgumentException>(() => inventory.Remove(definition));
                 }
             }
         }

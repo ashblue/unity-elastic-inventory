@@ -16,11 +16,10 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
         public IItemEntryReadOnly Get(IItemDefinition item) {
             _entries.TryGetValue(item, out var entry);
-
-            return entry;
+            return entry ?? _uniqueEntries.FirstOrDefault(e => e.Definition == item);
         }
 
-        public IItemEntryReadOnly Get(string id) {
+        public IItemEntryReadOnly GetUnique(string id) {
             return _uniqueEntries.FirstOrDefault(e => e.Id == id);
         }
 
@@ -50,12 +49,14 @@ namespace CleverCrow.Fluid.ElasticInventory {
             return entry != null && entry.Quantity >= quantity;
         }
 
-        public bool Has (string id) {
+        public bool HasUnique (string id) {
             var entry = _uniqueEntries.FirstOrDefault(e => e.Id == id);
             return entry != null;
         }
 
         public void Remove (IItemDefinition item, int quantity = 1) {
+            if (item.Unique) throw new System.ArgumentException("Unique items cannot be removed by definition. Use an ID instead");
+
             var entry = _entries[item];
 
             if (entry.Quantity > quantity) {
@@ -66,7 +67,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
             _entries.Remove(item);
         }
 
-        public void Remove (string id) {
+        public void RemoveUnique (string id) {
             _uniqueEntries.Remove(_uniqueEntries.First(e => e.Id == id));
         }
 
