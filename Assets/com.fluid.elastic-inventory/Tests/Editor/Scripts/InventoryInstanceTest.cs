@@ -285,6 +285,30 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
 
                 Assert.AreEqual(1, entries.Count);
             }
+
+            [Test]
+            public void It_should_get_all_items_by_definition_type () {
+                var definition = A.ItemDefinition().Build();
+                var inventory = Setup();
+
+                inventory.Add(definition);
+                var entries = inventory.GetAll<IItemDefinition>();
+
+                Assert.AreEqual(1, entries.Count);
+            }
+        }
+
+        public class GetAllUnique_Method : InventoryInstanceTest {
+            [Test]
+            public void It_should_return_all_unique_entries_matching_the_definition () {
+                var definition = A.ItemDefinition().WithUnique(true).Build();
+                var inventory = Setup();
+
+                inventory.Add(definition);
+                var entries = inventory.GetAllUnique(definition);
+
+                Assert.AreEqual(1, entries.Count);
+            }
         }
 
         public class Save_Method : InventoryInstanceTest {

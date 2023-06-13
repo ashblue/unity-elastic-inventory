@@ -102,5 +102,13 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
             return allEntries;
         }
+
+        public List<IItemEntryReadOnly> GetAll<T> () where T : IItemDefinition {
+            return GetAll().Where(e => e.Definition is T).ToList();
+        }
+
+        public List<IItemEntryReadOnly> GetAllUnique (IItemDefinition definition) {
+            return _uniqueEntries.Where(e => e.Definition == definition).ToList<IItemEntryReadOnly>();
+        }
     }
 }
