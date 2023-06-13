@@ -5,15 +5,23 @@ To create an editable an item that saves and loads you'll need to extend the Ite
 ```csharp
 // This is the data layer that is safe to edit at runtime
 public class ItemEntryWeapon : ItemEntryBase<ItemDefinitionWeapon> {
-    public override bool Unique { get; } = true;
-
     public int Level { get; set; } = 1;
     public int Durability { get; set; } = 1000;
 }
 
 // Our definition should have readonly data (static), never edit it at runtime
 public class ItemDefinitionWeapon : ItemDefinitionBase {
-    override protected ItemEntryBase ItemEntry { get; } = Type(ItemEntryWeapon);
+    public override bool Unique => true;
+
+    // This is where the magic happens. We're telling the definition to use our custom item entry class when creating a new entry
+    public override IItemEntry CreateItemEntry (int quantity = 1, string id = null) {
+        var entry = new ItemEntryWeapon();
+        
+        // Always call this here. It will setup all the required base values for you automatically
+        entry.Setup(this, quantity, id);
+
+        return entry;
+    }
 }
 ```
 

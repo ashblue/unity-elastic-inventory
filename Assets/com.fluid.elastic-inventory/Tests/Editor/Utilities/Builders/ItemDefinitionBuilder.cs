@@ -13,7 +13,11 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
             definition.Unique.Returns(_unique);
 
             definition.CreateItemEntry(Arg.Any<int>())
-                .Returns(info => _itemEntry ?? new ItemEntry(definition, info.Arg<int>()));
+                .Returns(info => _itemEntry ?? A.ItemEntry()
+                    .WithDefinition(definition)
+                    .WithQuantity(info.Arg<int>())
+                    .Build()
+                );
 
             return definition;
         }

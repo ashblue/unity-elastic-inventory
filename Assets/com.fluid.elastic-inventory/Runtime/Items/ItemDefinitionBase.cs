@@ -14,11 +14,13 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public string Id => _id;
         public string DisplayName => _displayName;
         public Sprite Image => _image;
-        public bool Unique => false;
+        public virtual bool Unique => false;
 
-        // @TODO Remove this method as virtual in favor an overridable property for the item entry base class
         public virtual IItemEntry CreateItemEntry (int quantity = 1, string id = null) {
-            return new ItemEntry(this, quantity, id);
+            var entry = new ItemEntry();
+            entry.Setup(this, quantity, id);
+
+            return entry;
         }
     }
 }

@@ -9,6 +9,11 @@ namespace CleverCrow.Fluid.ElasticInventory {
     }
 
     public interface IItemEntry : IItemEntryReadOnly {
+        /// <summary>
+        /// Only called once for you automatically. DO NOT call this for any reason in your code. The sky will fall.
+        /// </summary>
+        void Setup (IItemDefinition definition, int quantity = 1, string id = null);
+
         void SetQuantity (int quantity);
     }
 }

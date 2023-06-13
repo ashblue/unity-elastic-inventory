@@ -7,5 +7,9 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
         public static ItemEntryReadOnlyBuilder ItemEntryReadOnly () {
             return new ItemEntryReadOnlyBuilder();
         }
+
+        public static ItemEntryBuilder ItemEntry () {
+            return new ItemEntryBuilder();
+        }
     }
 }
