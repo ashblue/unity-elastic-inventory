@@ -14,6 +14,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
         /// </summary>
         void Setup (IItemDefinition definition, int quantity = 1, string id = null);
 
+        T GetDefinition<T> () where T : IItemDefinition;
         void SetQuantity (int quantity);
     }
 }

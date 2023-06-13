@@ -4,7 +4,7 @@ To create an editable an item that saves and loads you'll need to extend the Ite
 
 ```csharp
 // This is the data layer that is safe to edit at runtime
-public class ItemEntryWeapon : ItemEntryBase<ItemDefinitionWeapon> {
+public class ItemEntryWeapon : ItemEntryBase {
     public int Level { get; set; } = 1;
     public int Durability { get; set; } = 1000;
 }
@@ -31,6 +31,7 @@ Next you will need to extend an ItemEntryDataResolverBase to include your weapon
 
 ```csharp
 // This base class we're extending will automatically handle serializing fields like the definition ID, unique ID, quantity, ect.
+// We could extend the ItemEntryWeapon class directly, but this is a better approach, as it allows us to granularly control what data is saved and loaded
 public class ItemEntryDataResolverWeapon : ItemEntryDataResolverBase<ItemEntryWeapon> {
     public int level;
     public int durability;
@@ -53,7 +54,7 @@ Add the `DataResolver` override to your existing `ItemEntryWeapon` code you crea
 
 ```csharp
 public class ItemEntryWeapon : ItemEntryBase {
-    protected override ItemEntryDataResolverWeapon DataResolver { get; } = Type(ItemEntryDataResolverWeapon);
+    protected override IItemEntryDataResolver DataResolver { get; } = new ItemEntryDataResolverWeapon();
     
     ...
 }

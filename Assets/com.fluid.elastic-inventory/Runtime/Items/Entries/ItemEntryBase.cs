@@ -13,5 +13,14 @@
         public void SetQuantity(int quantity) {
             Quantity = quantity;
         }
+
+        /// <summary>
+        /// Helper method to retrieve a definition as the expected type
+        /// </summary>
+        public T GetDefinition<T> () where T : IItemDefinition {
+            // @NOTE Should be able to automatically cast this via generic class type,
+            // but it creates a reciprocal reference loop with the definition
+            return (T)Definition;
+        }
     }
 }
