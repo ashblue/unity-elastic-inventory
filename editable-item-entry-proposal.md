@@ -31,7 +31,8 @@ Next you will need to extend an ItemEntryDataResolverBase to include your weapon
 
 ```csharp
 // This base class we're extending will automatically handle serializing fields like the definition ID, unique ID, quantity, ect.
-// We could extend the ItemEntryWeapon class directly, but this is a better approach, as it allows us to granularly control what data is saved and loaded
+// We could extend the ItemEntryWeapon class directly, but this is a better approach, as it allows us granular control over what data is saved and loaded
+[System.Serializable]
 public class ItemEntryDataResolverWeapon : ItemEntryDataResolverBase<ItemEntryWeapon> {
     public int level;
     public int durability;
@@ -68,4 +69,7 @@ inventory.Add(ItemDefinitionWeapon_instance);
 var editableItem = inventory.Get<ItemEntryWeapon>("my item ID");
 editableItem.Level = 2;
 editableItem.Durability = 500;
+
+# Should support inventry.Add<ItemEntryWeapon>(definition) as well
+# Should support GetAll<T as entry type> as well
 ```

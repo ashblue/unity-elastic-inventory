@@ -28,7 +28,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
             if (item.Unique) {
                 var unique = item.CreateItemEntry();
-                _uniqueEntries.Add(unique);
+                AddEntry(unique);
 
                 return unique;
             }
@@ -39,9 +39,18 @@ namespace CleverCrow.Fluid.ElasticInventory {
             }
 
             var entry = item.CreateItemEntry(quantity);
-            _entries.Add(item, entry);
+            AddEntry(entry);
 
             return entry;
+        }
+
+        private void AddEntry (IItemEntry entry) {
+            if (entry.Definition.Unique) {
+                _uniqueEntries.Add(entry);
+                return;
+            }
+
+            _entries.Add(entry.Definition, entry);
         }
 
         public bool Has (IItemDefinition item, int quantity = 1) {
@@ -73,11 +82,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
         public string Save () {
             var data = new InventorySaveData {
-                items = _entries
-                    .Select(e => new ItemEntrySaveData {
-                        definitionId = e.Value.Definition.Id,
-                        quantity = e.Value.Quantity,
-                    })
+                items = GetAll<IItemEntry>()
+                    .Select(e => e.DataResolver.Save(e))
                     .ToList(),
             };
 
@@ -87,28 +93,44 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public void Load (string save) {
             var data = JsonUtility.FromJson<InventorySaveData>(save);
 
-            data.items.ForEach(entryData => {
-                var definition = _database.Get(entryData.definitionId);
-                var entry = definition.CreateItemEntry(entryData.quantity);
+            // Create a fake data resolver so we can pull out the definition from the raw JSON
+            var resolver = new ItemEntryDataResolver();
 
-                _entries.Add(definition, entry);
+            data.items.ForEach(json => {
+                // Create a fake data entry and fill it with the JSON data
+                // @TODO This should be optimized at some point. Tricky with how the data resolver works. As it's an instance based class
+                var tmpEntry = resolver.Load(json, _database);
+                var shell = tmpEntry.Definition.CreateItemEntry();
+                var entry = shell.DataResolver.Load(json, _database);
+
+                AddEntry(entry);
             });
         }
 
-        public List<IItemEntryReadOnly> GetAll () {
-            var allEntries = new List<IItemEntryReadOnly>();
-            allEntries.AddRange(_uniqueEntries);
-            allEntries.AddRange(_entries.Values.ToList<IItemEntryReadOnly>());
+        public List<T> GetAll<T> () where T : IItemEntryReadOnly {
+            var allEntries = new List<T>();
+            allEntries.AddRange(_uniqueEntries.Cast<T>());
+            allEntries.AddRange(_entries.Values.Cast<T>());
 
             return allEntries;
         }
 
-        public List<IItemEntryReadOnly> GetAll<T> () where T : IItemDefinition {
-            return GetAll().Where(e => e.Definition is T).ToList();
+        /// <summary>
+        /// Returns all unique and non-unique items in one list
+        /// </summary>
+        public List<IItemEntryReadOnly> GetAll () {
+            return GetAll<IItemEntryReadOnly>();
         }
 
-        public List<IItemEntryReadOnly> GetAllUnique (IItemDefinition definition) {
-            return _uniqueEntries.Where(e => e.Definition == definition).ToList<IItemEntryReadOnly>();
+        public List<T> GetAllByDefinitionType<T> (System.Type type) where T : IItemEntryReadOnly {
+            return GetAll<T>().Where(e => type.IsInstanceOfType(e.Definition)).ToList();
+        }
+
+        /// <summary>
+        /// Get everything associated with a specific definition type (weapon, armor, etc)
+        /// </summary>
+        public List<IItemEntryReadOnly> GetAllByDefinitionType (System.Type type) {
+            return GetAllByDefinitionType<IItemEntryReadOnly>(type);
         }
     }
 }

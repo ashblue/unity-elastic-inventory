@@ -292,20 +292,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 var inventory = Setup();
 
                 inventory.Add(definition);
-                var entries = inventory.GetAll<IItemDefinition>();
-
-                Assert.AreEqual(1, entries.Count);
-            }
-        }
-
-        public class GetAllUnique_Method : InventoryInstanceTest {
-            [Test]
-            public void It_should_return_all_unique_entries_matching_the_definition () {
-                var definition = A.ItemDefinition().WithUnique(true).Build();
-                var inventory = Setup();
-
-                inventory.Add(definition);
-                var entries = inventory.GetAllUnique(definition);
+                var entries = inventory.GetAllByDefinitionType(typeof(IItemDefinition));
 
                 Assert.AreEqual(1, entries.Count);
             }
@@ -318,19 +305,17 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 var quantity = 1;
                 var definition = A.ItemDefinition().WithId(id).Build();
 
-                var saveData = new InventorySaveData {
-                    items = new List<ItemEntrySaveData> {
-                        new() {
-                            definitionId = id,
-                            quantity = quantity,
-                        },
+                var inventory = Setup();
+                var entry = inventory.Add(definition, quantity);
+                var save = inventory.Save();
+
+                // Must be below the add due to the unique ID
+                var expectedSaveData = new InventorySaveData {
+                    items = new List<string> {
+                        (entry as IItemEntry)?.DataResolver.Save(entry),
                     },
                 };
-                var expectedSave = JsonUtility.ToJson(saveData);
-
-                var inventory = Setup();
-                inventory.Add(definition, quantity);
-                var save = inventory.Save();
+                var expectedSave = JsonUtility.ToJson(expectedSaveData);
 
                 Assert.IsNotEmpty(save);
                 Assert.AreEqual(expectedSave, save);
@@ -341,7 +326,6 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
             [Test]
             public void It_should_load_inventory_items_from_a_save () {
                 var id = "a";
-                var quantity = 1;
                 var definition = A.ItemDefinition().WithId(id).Build();
 
                 var database = Substitute.For<IItemDatabase>();
@@ -355,6 +339,44 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 newInventory.Load(save);
 
                 Assert.IsTrue(newInventory.Has(definition));
+            }
+
+            [Test]
+            public void It_should_load_unique_inventory_items_from_a_save () {
+                var id = "a";
+                var definition = A.ItemDefinition().WithUnique(true).WithId(id).Build();
+
+                var database = Substitute.For<IItemDatabase>();
+                database.Get(id).Returns(definition);
+
+                var inventory = Setup(database);
+                var oldItem = inventory.Add(definition);
+                var save = inventory.Save();
+
+                var newInventory = Setup(database);
+                newInventory.Load(save);
+
+                Assert.IsNotNull(newInventory.GetUnique(oldItem.Id));
+            }
+
+            [Test]
+            public void It_should_restore_multiple_unique_entries () {
+                var id = "a";
+                var definition = A.ItemDefinition().WithUnique(true).WithId(id).Build();
+
+                var database = Substitute.For<IItemDatabase>();
+                database.Get(id).Returns(definition);
+
+                var inventory = Setup(database);
+                var oldItem = inventory.Add(definition);
+                var oldItem2 = inventory.Add(definition);
+                var save = inventory.Save();
+
+                var newInventory = Setup(database);
+                newInventory.Load(save);
+
+                Assert.IsNotNull(newInventory.GetUnique(oldItem.Id));
+                Assert.IsNotNull(newInventory.GetUnique(oldItem2.Id));
             }
         }
     }
