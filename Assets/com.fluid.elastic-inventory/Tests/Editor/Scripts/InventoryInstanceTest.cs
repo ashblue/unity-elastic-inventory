@@ -356,6 +356,59 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     Assert.Throws<ArgumentException>(() => inventory.Remove(definition));
                 }
             }
+
+            public class Events : InventoryInstanceTest {
+                [Test]
+                public void It_should_trigger_a_remove_event_when_removing_an_item () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
+                    var eventTriggered = false;
+
+                    inventory.Events.ItemRemoved.AddListener((entry) => {
+                        eventTriggered = true;
+                        Assert.AreEqual(item, entry.Definition);
+                    });
+
+                    inventory.Add(item);
+                    inventory.Remove(item);
+
+                    Assert.IsTrue(eventTriggered);
+                }
+
+                [Test]
+                public void It_should_trigger_a_remove_event_when_removing_a_single_item_in_a_stack () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
+                    var eventTriggered = false;
+
+                    inventory.Events.ItemRemoved.AddListener((entry) => {
+                        eventTriggered = true;
+                        Assert.AreEqual(item, entry.Definition);
+                    });
+
+                    inventory.Add(item, 10);
+                    inventory.Remove(item, 1);
+
+                    Assert.IsTrue(eventTriggered);
+                }
+
+                [Test]
+                public void It_should_trigger_a_remove_event_when_removing_a_unique_item () {
+                    var item = A.ItemDefinition().WithUnique(true).Build();
+                    var inventory = Setup();
+                    var eventTriggered = false;
+
+                    inventory.Events.ItemRemoved.AddListener((entry) => {
+                        eventTriggered = true;
+                        Assert.AreEqual(item, entry.Definition);
+                    });
+
+                    var instance = inventory.Add(item);
+                    inventory.RemoveUnique(instance.Id);
+
+                    Assert.IsTrue(eventTriggered);
+                }
+            }
         }
 
         public class GetAll_Method : InventoryInstanceTest {

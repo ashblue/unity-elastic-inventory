@@ -80,14 +80,17 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
             if (entry.Quantity > quantity) {
                 entry.SetQuantity(entry.Quantity - quantity);
-                return;
+            } else {
+                _entries.Remove(item);
             }
 
-            _entries.Remove(item);
+            Events.ItemRemoved.Invoke(entry);
         }
 
         public void RemoveUnique (string id) {
-            _uniqueEntries.Remove(_uniqueEntries.First(e => e.Id == id));
+            var entry = _uniqueEntries.First(e => e.Id == id);
+            _uniqueEntries.Remove(entry);
+            Events.ItemRemoved.Invoke(entry);
         }
 
         public string Save () {
