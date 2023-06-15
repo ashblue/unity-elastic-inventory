@@ -6,7 +6,8 @@
         "com.fluid.elastic-inventory.Editor",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "com.fluid.database"
+        "com.fluid.database",
+        "com.fluid.unity-event-plus"
     ],
     "includePlatforms": [
         "Editor"

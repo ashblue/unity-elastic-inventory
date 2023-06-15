@@ -8,6 +8,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
         private readonly List<IItemEntry> _uniqueEntries = new();
         private readonly IItemDatabase _database;
 
+        public IInventoryEvents Events { get; } = new InventoryEvents();
+
         public InventoryInstance (IItemDatabase database) {
             _database = database;
         }
@@ -24,20 +26,19 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public IItemEntryReadOnly Add(IItemDefinition item, int quantity = 1) {
             if (item == null || quantity < 1) return null;
 
+            IItemEntryReadOnly entry;
             if (item.Unique) {
-                var unique = item.CreateItemEntry();
-                AddEntry(unique);
-
-                return unique;
-            }
-
-            if (_entries.TryGetValue(item, out var existingEntry)) {
+                entry = item.CreateItemEntry();
+                AddEntry((IItemEntry)entry);
+            } else if (_entries.TryGetValue(item, out var existingEntry)) {
                 existingEntry.SetQuantity(existingEntry.Quantity + quantity);
-                return existingEntry;
+                entry = existingEntry;
+            } else {
+                entry = item.CreateItemEntry(quantity);
+                AddEntry((IItemEntry)entry);
             }
 
-            var entry = item.CreateItemEntry(quantity);
-            AddEntry(entry);
+            Events.ItemAdded.Invoke(entry);
 
             return entry;
         }

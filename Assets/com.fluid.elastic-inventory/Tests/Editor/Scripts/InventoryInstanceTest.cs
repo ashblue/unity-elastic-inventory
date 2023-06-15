@@ -175,6 +175,57 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     Assert.AreEqual(entry, result);
                 }
             }
+
+            public class Events : InventoryInstanceTest {
+                [Test]
+                public void It_should_trigger_an_event_with_the_item_entry_when_an_item_is_added () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
+                    var eventTriggered = false;
+
+                    inventory.Events.ItemAdded.AddListener((entry) => {
+                        eventTriggered = true;
+                        Assert.AreEqual(item, entry.Definition);
+                    });
+
+                    inventory.Add(item);
+
+                    Assert.IsTrue(eventTriggered);
+                }
+
+                [Test]
+                public void It_should_trigger_an_event_when_a_unique_item_is_added () {
+                    var item = A.ItemDefinition().WithUnique(true).Build();
+                    var inventory = Setup();
+                    var eventTriggered = false;
+
+                    inventory.Events.ItemAdded.AddListener((entry) => {
+                        eventTriggered = true;
+                        Assert.AreEqual(item, entry.Definition);
+                    });
+
+                    inventory.Add(item);
+
+                    Assert.IsTrue(eventTriggered);
+                }
+
+                [Test]
+                public void It_should_trigger_an_event_when_items_are_added_to_an_existing_entry () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
+                    var eventTriggered = false;
+
+                    inventory.Add(item);
+                    inventory.Events.ItemAdded.AddListener((entry) => {
+                        eventTriggered = true;
+                        Assert.AreEqual(item, entry.Definition);
+                    });
+
+                    inventory.Add(item);
+
+                    Assert.IsTrue(eventTriggered);
+                }
+            }
         }
 
         public class Has_Method {
