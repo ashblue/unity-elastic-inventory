@@ -9,8 +9,6 @@ namespace CleverCrow.Fluid.ElasticInventory {
     }
 
     public interface IItemEntry : IItemEntryReadOnly {
-        IItemEntryDataResolver DataResolver { get; }
-
         /// <summary>
         /// Only called once for you automatically. DO NOT call this for any reason in your code. The sky will fall.
         /// </summary>

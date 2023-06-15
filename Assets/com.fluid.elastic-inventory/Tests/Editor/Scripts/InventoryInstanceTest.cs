@@ -312,7 +312,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 // Must be below the add due to the unique ID
                 var expectedSaveData = new InventorySaveData {
                     items = new List<string> {
-                        (entry as IItemEntry)?.DataResolver.Save(entry),
+                        entry.Definition.DataResolver.Save(entry),
                     },
                 };
                 var expectedSave = JsonUtility.ToJson(expectedSaveData);

@@ -15,6 +15,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public string DisplayName => _displayName;
         public Sprite Image => _image;
         public virtual bool Unique => false;
+        public virtual IItemEntryDataResolver DataResolver { get; } = new ItemEntryDataResolver();
 
         public virtual IItemEntry CreateItemEntry (int quantity = 1, string id = null) {
             var entry = new ItemEntry();

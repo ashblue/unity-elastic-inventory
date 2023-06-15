@@ -17,6 +17,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
         /// </summary>
         bool Unique { get; }
 
+        IItemEntryDataResolver DataResolver { get; }
+
         IItemEntry CreateItemEntry (int quantity = 1, string id = null);
     }
 }

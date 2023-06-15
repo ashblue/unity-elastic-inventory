@@ -46,15 +46,21 @@ public class ItemEntryDataResolverWeapon : ItemEntryDataResolverBase<ItemEntryWe
         itemEntry.Level = level;
         itemEntry.Durability = durability;
     }
+    
+    // While this is an example and not needed in this exact case, we suggest clearing your data to a clean state. Otherwise your save data may leak into another item entry by accident
+    protected override void OnReset (ItemEntryWeapon itemEntry) {
+        itemEntry.Level = 0;
+        itemEntry.Durability = 0;
+    }
 }
 ```
 
-Lastly you need to inform your `ItemEntryWeapon` to use the `ItemEntryDataResolverWeapon` we just created. This is done by overriding the `DataResolver` property and setting it to the `ItemEntryDataResolverWeapon` type.
+Lastly you need to inform your `ItemDefinitionWeapon` to use the `ItemEntryDataResolverWeapon` we just created. This is done by overriding the `DataResolver` property and setting it to the `ItemEntryDataResolverWeapon` type you just created.
 
-Add the `DataResolver` override to your existing `ItemEntryWeapon` code you created earlier.
+Add the `DataResolver` override to your existing `ItemDefinitionWeapon` code you created earlier.
 
 ```csharp
-public class ItemEntryWeapon : ItemEntryBase {
+public class ItemDefinitionWeapon : ItemDefinitionBase {
     protected override IItemEntryDataResolver DataResolver { get; } = new ItemEntryDataResolverWeapon();
     
     ...

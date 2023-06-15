@@ -15,6 +15,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public int quantity;
 
         public string Save (IItemEntryReadOnly entry) {
+            Reset();
+
             definitionId = entry.Definition.Id;
             uniqueId = entry.Id;
             quantity = entry.Quantity;
@@ -33,10 +35,21 @@ namespace CleverCrow.Fluid.ElasticInventory {
             return entry;
         }
 
+        private void Reset () {
+            definitionId = null;
+            uniqueId = null;
+            quantity = 0;
+
+            OnReset();
+        }
+
         protected virtual void OnSave (T entry) {
         }
 
         protected virtual void OnLoad (T entry) {
+        }
+
+        protected virtual void OnReset () {
         }
     }
 }

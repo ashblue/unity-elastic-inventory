@@ -21,6 +21,9 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     .Build()
                 );
 
+            var dataResolver = new ItemEntryDataResolver();
+            definition.DataResolver.Returns(dataResolver);
+
             return definition;
         }
 

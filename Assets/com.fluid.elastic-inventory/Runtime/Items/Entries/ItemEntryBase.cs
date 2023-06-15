@@ -3,7 +3,6 @@
         public IItemDefinition Definition { get; private set; }
         public int Quantity { get; private set; }
         public string Id { get; private set; }
-        public virtual IItemEntryDataResolver DataResolver { get; } = new ItemEntryDataResolver();
 
         public void Setup (IItemDefinition definition, int quantity = 1, string id = null) {
             Id = id ?? System.Guid.NewGuid().ToString();

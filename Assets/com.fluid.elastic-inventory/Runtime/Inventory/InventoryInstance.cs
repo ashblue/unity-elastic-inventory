@@ -83,7 +83,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public string Save () {
             var data = new InventorySaveData {
                 items = GetAll<IItemEntry>()
-                    .Select(e => e.DataResolver.Save(e))
+                    .Select(e => e.Definition.DataResolver.Save(e))
                     .ToList(),
             };
 
@@ -97,11 +97,9 @@ namespace CleverCrow.Fluid.ElasticInventory {
             var resolver = new ItemEntryDataResolver();
 
             data.items.ForEach(json => {
-                // Create a fake data entry and fill it with the JSON data
-                // @TODO This should be optimized at some point. Tricky with how the data resolver works. As it's an instance based class
+                // Create a fake object so we can get to the definition from the save data
                 var tmpEntry = resolver.Load(json, _database);
-                var shell = tmpEntry.Definition.CreateItemEntry();
-                var entry = shell.DataResolver.Load(json, _database);
+                var entry = tmpEntry.Definition.DataResolver.Load(json, _database);
 
                 AddEntry(entry);
             });

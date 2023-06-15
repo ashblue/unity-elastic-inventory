@@ -13,5 +13,10 @@
             itemEntry.Level = level;
             itemEntry.Durability = durability;
         }
+
+        protected override void OnReset () {
+            level = 0;
+            durability = 0;
+        }
     }
 }
