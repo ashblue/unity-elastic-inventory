@@ -128,6 +128,16 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
 
                     item.Received().CreateItemEntry(2);
                 }
+
+                [Test]
+                public void Adding_zero_items_should_not_add_any_items () {
+                    var item = A.ItemDefinition().Build();
+                    var inventory = Setup();
+
+                    var instance = inventory.Add(item, 0);
+
+                    Assert.IsNull(instance);
+                }
             }
 
             public class Unique_Items : InventoryInstanceTest {

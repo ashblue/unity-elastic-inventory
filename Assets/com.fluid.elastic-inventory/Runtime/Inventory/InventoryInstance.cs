@@ -4,8 +4,6 @@ using UnityEngine;
 
 namespace CleverCrow.Fluid.ElasticInventory {
     public class InventoryInstance : IInventoryInstance {
-        // @TODO Entry keys will need to support a random ID instead so multiple item entries can be supported (like gear)
-        // Or we will need a separate list for storing unique item entries?
         private readonly Dictionary<IItemDefinition, IItemEntry> _entries = new();
         private readonly List<IItemEntry> _uniqueEntries = new();
         private readonly IItemDatabase _database;
@@ -24,7 +22,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
         }
 
         public IItemEntryReadOnly Add(IItemDefinition item, int quantity = 1) {
-            if (item == null) return null;
+            if (item == null || quantity < 1) return null;
 
             if (item.Unique) {
                 var unique = item.CreateItemEntry();
