@@ -1,6 +1,6 @@
 ﻿namespace CleverCrow.Fluid.ElasticInventory.Testing {
     public class ItemEntryBuilder {
-        private IItemDefinition _definition;
+        private IItemDefinition _definition = A.ItemDefinition().Build();
         private int _quantity = 1;
         private string _id;
 

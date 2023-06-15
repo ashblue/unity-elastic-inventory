@@ -252,8 +252,6 @@ MonoBehaviour:
     _quantity: 2
   - _definition: {fileID: 11400000, guid: b1f668d08b8a24f44b19b56c0abc84d7, type: 2}
     _quantity: 0
-  - _definition: {fileID: 11400000, guid: b1f668d08b8a24f44b19b56c0abc84d7, type: 2}
-    _quantity: 0
 --- !u!4 &815783741
 Transform:
   m_ObjectHideFlags: 0

@@ -138,6 +138,17 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
 
                     Assert.IsNull(instance);
                 }
+
+                [Test]
+                public void It_should_add_an_item_entry_object () {
+                    var entry = A.ItemEntry().WithQuantity(2).Build();
+
+                    var inventory = Setup();
+                    inventory.Add(entry);
+                    var result = inventory.Get(entry.Definition);
+
+                    Assert.AreEqual(entry.Quantity, result.Quantity);
+                }
             }
 
             public class Unique_Items : InventoryInstanceTest {
@@ -150,6 +161,18 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     inventory.Add(definition);
 
                     Assert.AreEqual(2, inventory.GetAll().Count);
+                }
+
+                [Test]
+                public void It_should_add_a_unique_item_entry_as_an_individual_entry () {
+                    var definition = A.ItemDefinition().WithUnique(true).Build();
+                    var entry = A.ItemEntry().WithDefinition(definition).Build();
+                    var inventory = Setup();
+
+                    inventory.Add(entry);
+                    var result = inventory.GetUnique(entry.Id);
+
+                    Assert.AreEqual(entry, result);
                 }
             }
         }
