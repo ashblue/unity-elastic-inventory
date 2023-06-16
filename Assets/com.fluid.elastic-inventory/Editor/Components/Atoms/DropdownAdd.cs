@@ -8,6 +8,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
         readonly string _addText;
         readonly VisualElement _containerParent;
 
+        // @TODO Make addText optional so the categories will update on click
         public DropdownAdd (VisualElement containerParent, string addText, List<KeyValuePair<string, T>> choices) : base(containerParent) {
             _containerParent = containerParent;
             _choices = choices;

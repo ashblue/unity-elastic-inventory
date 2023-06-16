@@ -25,12 +25,11 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             var dropdownAdd = new DropdownAdd<Type>(container.Q<VisualElement>("add"), "Add", displayNameToClass);
             dropdownAdd.BindClick((Type type) => { CreateItemDefinition(database, type); });
 
-            var dropdownCategory = new DropdownAdd<string>(container.Q<VisualElement>("category"), "Category",
-                new List<KeyValuePair<string, string>> {
-                    new("Generic", "Generic"),
-                    new("Weapon", "Weapon"),
-                    new("Armor", "Armor"),
-                });
+            var dropdownCategory = new DropdownAdd<int>(
+                container.Q<VisualElement>("category"),
+                "Category",
+                database.Categories.Select((category, index) => new KeyValuePair<string, int>(category, index)).ToList()
+            );
 
             dropdownCategory.BindClick(category => {
                 Debug.Log($"Handle category logic here: {category}");
