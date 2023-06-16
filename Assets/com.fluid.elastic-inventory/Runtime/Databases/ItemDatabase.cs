@@ -8,6 +8,13 @@ namespace CleverCrow.Fluid.ElasticInventory {
         private readonly Dictionary<string, ItemDefinitionBase> _idToDefinition = new();
         public List<ItemDefinitionBase> _definitions = new();
 
+        [SerializeField]
+        List<string> _categories = new() {
+            "Default",
+        };
+
+        public List<string> Categories => _categories;
+
         public IItemDefinition Get (string id) {
             return _idToDefinition[id];
         }

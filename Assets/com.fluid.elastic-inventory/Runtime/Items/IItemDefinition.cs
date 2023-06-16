@@ -9,6 +9,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
         string DisplayName { get; }
 
+        string Category { get; }
+
         Sprite Image { get; }
 
         /// <summary>

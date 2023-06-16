@@ -15,3 +15,4 @@ MonoBehaviour:
   _id: 8e4c173c-0723-49f5-b163-aa5128c58abe
   _displayName: Sample Items
   _image: {fileID: 21300000, guid: 8aa932b95bcf64767bd4a4269f7d3b82, type: 3}
+  _category: 1
