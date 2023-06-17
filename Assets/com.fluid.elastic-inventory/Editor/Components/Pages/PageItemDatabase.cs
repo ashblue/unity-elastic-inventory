@@ -10,12 +10,22 @@ using Object = UnityEngine.Object;
 namespace CleverCrow.Fluid.ElasticInventory.Editors {
     public class PageItemDatabase : ComponentBase {
         readonly ItemDatabase _database;
+        string _category;
 
         public PageItemDatabase (VisualElement container, ItemDatabase database) : base(container) {
-            CreateHeader(container, database);
-
             _database = database;
-            database._definitions.ForEach(AddItemElement);
+
+            CreateHeader(container, database);
+            PrintItems();
+        }
+
+        void PrintItems () {
+            ClearItems();
+
+            _database._definitions.ForEach(item => {
+                if (_category != null && item.Category != _category) return;
+                AddItemElement(item);
+            });
         }
 
         void CreateHeader (VisualElement container, ItemDatabase database) {
@@ -23,16 +33,20 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
 
             var displayNameToClass = GetDefinitionDisplayNameToClass();
             var dropdownAdd = new DropdownAdd<Type>(container.Q<VisualElement>("add"), "Add", displayNameToClass);
-            dropdownAdd.BindClick((Type type) => { CreateItemDefinition(database, type); });
+            dropdownAdd.BindClick(type => { CreateItemDefinition(database, type); });
 
             var dropdownCategory = new DropdownAdd<int>(
                 container.Q<VisualElement>("category"),
                 "Category",
-                database.Categories.Select((category, index) => new KeyValuePair<string, int>(category, index)).ToList()
+                database.Categories.Select((category, index) => new KeyValuePair<string, int>(category, index + 1)).ToList(),
+                resetOnInteract: false
             );
 
             dropdownCategory.BindClick(category => {
-                Debug.Log($"Handle category logic here: {category}");
+                if (category == 0) _category = null;
+                else _category = database.Categories[category - 1];
+
+                PrintItems();
             });
         }
 
@@ -51,6 +65,10 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
         }
 
         void CreateItemDefinition (ItemDatabase database, Type type) {
+            if (type == null) {
+                return;
+            }
+
             var projectWindowPath = GetSelectedFolderPath();
             var path = EditorUtility.SaveFilePanelInProject(
                 "Create Item Definition",
@@ -78,6 +96,11 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             AssetDatabase.Refresh();
 
             AddItemElement(itemDefinition as ItemDefinitionBase);
+        }
+
+        private void ClearItems () {
+            var table = _container.Q<VisualElement>("table");
+            table.Clear();
         }
 
         private void AddItemElement (ItemDefinitionBase itemDefinition) {
