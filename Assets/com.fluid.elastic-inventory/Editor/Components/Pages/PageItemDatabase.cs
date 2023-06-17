@@ -11,6 +11,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
     public class PageItemDatabase : ComponentBase {
         readonly ItemDatabase _database;
         string _category;
+        string _search;
 
         public PageItemDatabase (VisualElement container, ItemDatabase database) : base(container) {
             _database = database;
@@ -22,8 +23,18 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
         void PrintItems () {
             ClearItems();
 
-            _database._definitions.ForEach(item => {
+            var definitions = _database._definitions.ToList();
+
+            // Make sure the definitions are sorted in reverse so the newest items are first
+            definitions.Reverse();
+
+            definitions.ForEach(item => {
                 if (_category != null && item.Category != _category) return;
+
+                if (_search != null && !item.DisplayName.Replace(" ", "").ToLower().Contains(_search)) {
+                    return;
+                }
+
                 AddItemElement(item);
             });
         }
@@ -31,10 +42,19 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
         void CreateHeader (VisualElement container, ItemDatabase database) {
             container.Q<Label>("title").text = database.name;
 
+            // Create SearchInput
+            var searchInput = new SearchInput(container.Q<VisualElement>("search"));
+            searchInput.BindChange(search => {
+                _search = string.IsNullOrEmpty(search) ? null : search.ToLower();
+                PrintItems();
+            });
+
+            // Create dropdown add
             var displayNameToClass = GetDefinitionDisplayNameToClass();
             var dropdownAdd = new DropdownAdd<Type>(container.Q<VisualElement>("add"), "Add", displayNameToClass);
             dropdownAdd.BindClick(type => { CreateItemDefinition(database, type); });
 
+            // Create dropdown category
             var dropdownCategory = new DropdownAdd<int>(
                 container.Q<VisualElement>("category"),
                 "Category",
@@ -86,11 +106,11 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
             serializedObject.FindProperty("_displayName").stringValue = MakeSpacedWord(fileName);
             // @TODO Duplicate IDs are inevitable due to object cloning, repair them automatically when refreshing asset references
-            serializedObject.FindProperty("_id").stringValue = System.Guid.NewGuid().ToString();
+            serializedObject.FindProperty("_id").stringValue = Guid.NewGuid().ToString();
             serializedObject.ApplyModifiedPropertiesWithoutUndo();
 
             AssetDatabase.CreateAsset(itemDefinition, path);
-            database._definitions.Add(itemDefinition as ItemDefinitionBase);
+            database._definitions.Insert(0, itemDefinition as ItemDefinitionBase);
             EditorUtility.SetDirty(database);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();

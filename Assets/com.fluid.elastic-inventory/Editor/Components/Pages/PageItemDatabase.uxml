@@ -4,10 +4,7 @@
 
     <ui:VisualElement class="toolbar">
         <ui:Label name="title" class="toolbar__title" text="Lorem Ipsum" />
-        <ui:VisualElement style="flex-direction: row;">
-            <ui:Label text="Search" style="flex-grow: 0; color: grey;" name="placeholderLabel" />
-            <ui:TextField class="toolbar__search" name="textField" />
-        </ui:VisualElement>
+        <ui:VisualElement name="search" />
         <ui:VisualElement name="add" />
         <ui:VisualElement name="category" />
     </ui:VisualElement>
