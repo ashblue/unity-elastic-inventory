@@ -50,5 +50,10 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
 
             return dropdown;
         }
+
+        public void SetValue (int indexOf) {
+            if (indexOf < 0 || indexOf >= _choices.Count) return;
+            _dropdown.value = _choices[indexOf].Key;
+        }
     }
 }

@@ -7,6 +7,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
         private readonly string _path;
         protected readonly VisualElement _container;
 
+        public VisualElement Container => _container;
+
         protected ComponentBase (VisualElement containerParent) {
             if (_path == null) {
                 var stackTrace = new System.Diagnostics.StackTrace(true);

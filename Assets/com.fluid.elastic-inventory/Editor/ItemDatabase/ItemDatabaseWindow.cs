@@ -23,6 +23,12 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             RefreshWindow();
         }
 
+        void OnFocus () {
+            // If the user edits the categories while displaying the window they get out of sync
+            // This makes sure that cannot happen
+            _page?.SyncCategories();
+        }
+
         private static void RefreshWindow () {
             var window = GetWindow<ItemDatabaseWindow>("Item Database");
 

@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: ItemDatabase
   m_EditorClassIdentifier: 
   _definitions:
+  - {fileID: 11400000, guid: 9f77921cfc0df4d3996ebcabcf7b4f4c, type: 2}
+  - {fileID: 11400000, guid: ae50e12664dd048318fd7a64be7f8837, type: 2}
+  - {fileID: 11400000, guid: ed8218179ad2a4cff97be93b37f2445b, type: 2}
   - {fileID: 11400000, guid: dec899d6e9c7a44e6bdfc1ab1b33cfd6, type: 2}
   - {fileID: 11400000, guid: e74e013d5252f4a80869587ff6c42573, type: 2}
   - {fileID: 11400000, guid: b1f668d08b8a24f44b19b56c0abc84d7, type: 2}
@@ -22,4 +25,3 @@ MonoBehaviour:
   - Default
   - Important
   - Weapon
-  - Armor

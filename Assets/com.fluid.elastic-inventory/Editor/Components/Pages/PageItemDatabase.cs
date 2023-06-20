@@ -12,9 +12,11 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
         readonly ItemDatabase _database;
         string _category;
         string _search;
+        readonly VisualElement _containerParent;
 
         public PageItemDatabase (VisualElement container, ItemDatabase database) : base(container) {
             _database = database;
+            _containerParent = container;
 
             CreateHeader(container, database);
             PrintItems();
@@ -54,20 +56,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             var dropdownAdd = new DropdownAdd<Type>(container.Q<VisualElement>("add"), "Add", displayNameToClass);
             dropdownAdd.BindClick(type => { CreateItemDefinition(database, type); });
 
-            // Create dropdown category
-            var dropdownCategory = new DropdownAdd<int>(
-                container.Q<VisualElement>("category"),
-                "Category",
-                database.Categories.Select((category, index) => new KeyValuePair<string, int>(category, index + 1)).ToList(),
-                resetOnInteract: false
-            );
-
-            dropdownCategory.BindClick(category => {
-                if (category == 0) _category = null;
-                else _category = database.Categories[category - 1];
-
-                PrintItems();
-            });
+            SyncCategories();
         }
 
         static List<KeyValuePair<string, Type>> GetDefinitionDisplayNameToClass () {
@@ -118,6 +107,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             AssetDatabase.Refresh();
 
             AddItemElement(itemDefinition as ItemDefinitionBase);
+            Selection.activeObject = itemDefinition;
         }
 
         private void ClearItems () {
@@ -127,7 +117,11 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
 
         private void AddItemElement (ItemDefinitionBase itemDefinition) {
             var table = _container.Q<VisualElement>("table");
-            new ItemEntry(table, itemDefinition, DeleteItemFromDatabase);
+            var item = new ItemEntry(table, itemDefinition, DeleteItemFromDatabase);
+
+            // move the item to be the first child so users don't have to hunt for it at the bottom
+            table.Remove(item.Container);
+            table.Insert(0, item.Container);
         }
 
         private void DeleteItemFromDatabase (ItemDefinitionBase itemDefinition) {
@@ -166,6 +160,28 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             }
 
             return spacedWord;
+        }
+
+        public void SyncCategories () {
+            _containerParent.Q<VisualElement>("category").Clear();
+
+            var dropdownCategory = new DropdownAdd<int>(
+                _containerParent.Q<VisualElement>("category"),
+                "Category",
+                _database.Categories.Select((category, index) => new KeyValuePair<string, int>(category, index + 1)).ToList(),
+                resetOnInteract: false
+            );
+
+            if (_category != null) {
+                dropdownCategory.SetValue(_database.Categories.IndexOf(_category));
+            }
+
+            dropdownCategory.BindClick(category => {
+                if (category == 0) _category = null;
+                else _category = _database.Categories[category - 1];
+
+                PrintItems();
+            });
         }
     }
 }
