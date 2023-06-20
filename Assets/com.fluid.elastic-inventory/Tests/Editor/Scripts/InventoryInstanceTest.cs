@@ -429,9 +429,24 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 var inventory = Setup();
 
                 inventory.Add(definition);
-                var entries = inventory.GetAllByDefinitionType(typeof(IItemDefinition));
+                var entries = inventory.GetAll(typeof(IItemDefinition));
 
                 Assert.AreEqual(1, entries.Count);
+            }
+
+            [Test]
+            public void It_should_get_all_items_by_category () {
+                var category = "Weapon";
+                var definitionA = A.ItemDefinition().WithCategory(category).Build();
+                var definitionB = A.ItemDefinition().Build();
+                var inventory = Setup();
+
+                inventory.Add(definitionA);
+                inventory.Add(definitionB);
+                var entries = inventory.GetAll(category: category);
+
+                Assert.AreEqual(1, entries.Count);
+                Assert.AreEqual(definitionA, entries[0].Definition);
             }
         }
 

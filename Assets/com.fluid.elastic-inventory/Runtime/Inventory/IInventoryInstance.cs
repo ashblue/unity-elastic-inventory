@@ -6,10 +6,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
         IItemEntryReadOnly Get (IItemDefinition item);
         IItemEntryReadOnly GetUnique (string id);
-        List<IItemEntryReadOnly> GetAll ();
-        List<T> GetAll<T> () where T : IItemEntryReadOnly;
-        List<T> GetAllByDefinitionType<T> (System.Type type) where T : IItemEntryReadOnly;
-        List<IItemEntryReadOnly> GetAllByDefinitionType (System.Type type);
+        List<IItemEntryReadOnly> GetAll (System.Type definitionType = null, string category = null);
+        List<T> GetAll<T> (System.Type definitionType = null, string category = null) where T : IItemEntryReadOnly;
 
         IItemEntryReadOnly Add (IItemDefinition item, int quantity = 1);
         IItemEntryReadOnly Add (IItemEntryReadOnly entry);

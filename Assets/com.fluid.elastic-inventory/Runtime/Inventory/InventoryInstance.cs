@@ -118,30 +118,46 @@ namespace CleverCrow.Fluid.ElasticInventory {
             });
         }
 
-        public List<T> GetAll<T> () where T : IItemEntryReadOnly {
+        /// <summary>
+        /// Get all item entries of the specified criteria
+        /// </summary>
+        /// <param name="definitionType">
+        /// Use this to retrieve only items created from a specific definition type (Weapons, Armor, etc)
+        /// </param>
+        /// <param name="category">
+        /// Only return items from a specific category
+        /// </param>
+        /// <typeparam name="T">
+        /// Declare a custom item entry type to be returned. Useful for items that have an editable state
+        /// </typeparam>
+        /// <returns></returns>
+        public List<T> GetAll<T> (
+            System.Type definitionType = null,
+            string category = null
+        ) where T : IItemEntryReadOnly {
             var allEntries = new List<T>();
             allEntries.AddRange(_uniqueEntries.Cast<T>());
             allEntries.AddRange(_entries.Values.Cast<T>());
+
+            if (definitionType != null) {
+                allEntries = allEntries.Where(e => definitionType.IsInstanceOfType(e.Definition)).ToList();
+            }
+
+            if (category != null) {
+                allEntries = allEntries.Where(e => e.Definition.Category == category).ToList();
+            }
 
             return allEntries;
         }
 
         /// <summary>
-        /// Returns all unique and non-unique items in one list
+        /// Simplified wrapper for GetAll that returns a non-editable item entry. See GetAll with generic type for full documentation
         /// </summary>
-        public List<IItemEntryReadOnly> GetAll () {
-            return GetAll<IItemEntryReadOnly>();
-        }
-
-        public List<T> GetAllByDefinitionType<T> (System.Type type) where T : IItemEntryReadOnly {
-            return GetAll<T>().Where(e => type.IsInstanceOfType(e.Definition)).ToList();
-        }
-
-        /// <summary>
-        /// Get everything associated with a specific definition type (weapon, armor, etc)
-        /// </summary>
-        public List<IItemEntryReadOnly> GetAllByDefinitionType (System.Type type) {
-            return GetAllByDefinitionType<IItemEntryReadOnly>(type);
+        public List<IItemEntryReadOnly> GetAll (
+            System.Type definitionType = null,
+            string category = null
+        ) {
+            return GetAll<IItemEntryReadOnly>(definitionType, category);
         }
     }
 }
