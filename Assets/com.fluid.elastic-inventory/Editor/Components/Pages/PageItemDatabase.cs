@@ -71,17 +71,19 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
         }
 
         static List<KeyValuePair<string, Type>> GetDefinitionDisplayNameToClass () {
-            var assembly = Assembly.GetAssembly(typeof(ItemDefinitionBase));
+            var allAssemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-            var keyTypeValueName = assembly.GetTypes()
-                .Where(type => type.GetCustomAttribute<ItemDefinitionDetailsAttribute>() != null)
-                .Select(type => new KeyValuePair<string, Type>(
-                    type.GetCustomAttribute<ItemDefinitionDetailsAttribute>().DisplayName,
-                    type
-                ))
-                .ToList();
+            var keyToType = new List<KeyValuePair<string, Type>>();
+            foreach (var assembly in allAssemblies) {
+                keyToType.AddRange(assembly.GetTypes()
+                    .Where(type => type.GetCustomAttribute<ItemDefinitionDetailsAttribute>() != null)
+                    .Select(type => new KeyValuePair<string, Type>(
+                        type.GetCustomAttribute<ItemDefinitionDetailsAttribute>().DisplayName,
+                        type
+                    )));
+            }
 
-            return keyTypeValueName;
+            return keyToType;
         }
 
         void CreateItemDefinition (ItemDatabase database, Type type) {

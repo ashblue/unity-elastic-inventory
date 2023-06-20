@@ -1,4 +1,5 @@
 ﻿namespace CleverCrow.Fluid.ElasticInventory.Samples {
+    [ItemDefinitionDetails("Weapon")]
     public class ItemDefinitionWeapon : ItemDefinitionBase {
         public override bool Unique => true;
         public override IItemEntryDataResolver DataResolver => new ItemEntryDataResolverWeapon();
