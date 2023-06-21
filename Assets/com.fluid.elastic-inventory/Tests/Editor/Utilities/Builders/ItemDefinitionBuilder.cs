@@ -1,3 +1,4 @@
+using System;
 using NSubstitute;
 
 namespace CleverCrow.Fluid.ElasticInventory.Testing {
@@ -20,6 +21,16 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     .WithDefinition(definition)
                     .WithQuantity(info.Arg<int>())
                     .WithId(info.Arg<string>())
+                    .WithCreatedAt(DateTime.Now)
+                    .Build()
+                );
+
+            definition.CreateItemEntry(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<DateTime>())
+                .Returns(info => _itemEntry ?? A.ItemEntry()
+                    .WithDefinition(definition)
+                    .WithQuantity(info.Arg<int>())
+                    .WithId(info.Arg<string>())
+                    .WithCreatedAt(info.Arg<DateTime>())
                     .Build()
                 );
 

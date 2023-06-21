@@ -1,3 +1,5 @@
+using System;
+using System.Globalization;
 using UnityEngine;
 
 namespace CleverCrow.Fluid.ElasticInventory {
@@ -13,6 +15,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public string definitionId;
         public string uniqueId;
         public int quantity;
+        public string createdAt;
 
         public string Save (IItemEntryReadOnly entry) {
             Reset();
@@ -20,6 +23,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
             definitionId = entry.Definition.Id;
             uniqueId = entry.Id;
             quantity = entry.Quantity;
+            createdAt = entry.CreatedAt.ToString(CultureInfo.InvariantCulture);
 
             OnSave((T)entry);
 
@@ -29,7 +33,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public IItemEntry Load (string json, IItemDatabase database) {
             JsonUtility.FromJsonOverwrite(json, this);
 
-            var entry = database.Get(definitionId).CreateItemEntry(quantity, uniqueId);
+            var createdAtRestore = DateTime.Parse(createdAt, CultureInfo.InvariantCulture);
+            var entry = database.Get(definitionId).CreateItemEntry(quantity, uniqueId, createdAtRestore);
             OnLoad((T)entry);
 
             return entry;

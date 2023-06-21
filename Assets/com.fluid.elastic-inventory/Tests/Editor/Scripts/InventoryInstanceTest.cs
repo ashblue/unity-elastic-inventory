@@ -530,6 +530,31 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 Assert.IsNotNull(newInventory.Get(oldItem.Id));
                 Assert.IsNotNull(newInventory.Get(oldItem2.Id));
             }
+
+            [Test]
+            public void It_should_restore_entry_CreatedAt_timestamps () {
+                var id = "a";
+
+                var definition = A.ItemDefinition().Build();
+                var entry = A.ItemEntry()
+                    .WithId(id)
+                    .WithCreatedAt(DateTime.Now.AddDays(-7))
+                    .WithDefinition(definition)
+                    .Build();
+
+                var database = Substitute.For<IItemDatabase>();
+                database.Get(definition.Id).Returns(definition);
+
+                var inventory = Setup(database);
+                inventory.Add(entry);
+                var save = inventory.Save();
+
+                var newInventory = Setup(database);
+                newInventory.Load(save);
+                var loadedEntry = newInventory.Get(id);
+
+                Assert.AreEqual(entry.CreatedAt.ToString(), loadedEntry.CreatedAt.ToString());
+            }
         }
     }
 }

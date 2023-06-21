@@ -47,7 +47,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public IItemEntryReadOnly Add(IItemEntryReadOnly entry) {
             if (entry == null) return null;
 
-            if (entry.Definition.Unique) {
+            // Unique items and items without existing quantities can be added directly
+            if (entry.Definition.Unique || !Has(entry.Definition)) {
                 AddEntry(entry as IItemEntry);
                 return entry;
             }

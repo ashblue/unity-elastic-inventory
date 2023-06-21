@@ -10,6 +10,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
 
             entry.Definition.Returns(_definition);
             entry.Quantity.Returns(_quantity);
+            entry.Id.Returns(System.Guid.NewGuid().ToString());
+            entry.CreatedAt.Returns(System.DateTime.Now);
 
             return entry;
         }

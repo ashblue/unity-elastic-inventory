@@ -9,9 +9,9 @@
         // You don't need to do this if you're not planning to make this category available to swappable category items
         public override string Category => "Weapon";
 
-        public override IItemEntry CreateItemEntry (int quantity = 1, string id = null) {
+        public override IItemEntry CreateItemEntry (int quantity = 1, string id = null, System.DateTime? createdAt = null) {
             var entry = new ItemEntryWeapon();
-            entry.Setup(this, quantity, id);
+            entry.Setup(this, quantity, id, createdAt);
 
             return entry;
         }
