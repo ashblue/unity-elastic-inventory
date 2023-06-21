@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace CleverCrow.Fluid.ElasticInventory {
     public class InventoryInstance : IInventoryInstance {
+        private readonly Dictionary<string, IItemEntry> _idToEntry = new();
         private readonly Dictionary<IItemDefinition, IItemEntry> _entries = new();
         private readonly List<IItemEntry> _uniqueEntries = new();
         private readonly IItemDatabase _database;
@@ -19,8 +20,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
             return entry ?? _uniqueEntries.FirstOrDefault(e => e.Definition == item);
         }
 
-        public IItemEntryReadOnly GetUnique(string id) {
-            return _uniqueEntries.FirstOrDefault(e => e.Id == id);
+        public IItemEntryReadOnly Get(string entryId) {
+            return _idToEntry.TryGetValue(entryId, out var entry) ? entry : null;
         }
 
         public IItemEntryReadOnly Add(IItemDefinition item, int quantity = 1) {
@@ -57,10 +58,11 @@ namespace CleverCrow.Fluid.ElasticInventory {
         private void AddEntry (IItemEntry entry) {
             if (entry.Definition.Unique) {
                 _uniqueEntries.Add(entry);
-                return;
+            } else {
+                _entries.Add(entry.Definition, entry);
             }
 
-            _entries.Add(entry.Definition, entry);
+            _idToEntry.Add(entry.Id, entry);
         }
 
         public bool Has (IItemDefinition item, int quantity = 1) {
@@ -68,9 +70,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
             return entry != null && entry.Quantity >= quantity;
         }
 
-        public bool HasUnique (string id) {
-            var entry = _uniqueEntries.FirstOrDefault(e => e.Id == id);
-            return entry != null;
+        public bool Has (string entryId) {
+            return _idToEntry.ContainsKey(entryId);
         }
 
         public void Remove (IItemDefinition item, int quantity = 1) {
@@ -82,14 +83,23 @@ namespace CleverCrow.Fluid.ElasticInventory {
                 entry.SetQuantity(entry.Quantity - quantity);
             } else {
                 _entries.Remove(item);
+                _idToEntry.Remove(entry.Id);
             }
 
             Events.ItemRemoved.Invoke(entry);
         }
 
-        public void RemoveUnique (string id) {
-            var entry = _uniqueEntries.First(e => e.Id == id);
-            _uniqueEntries.Remove(entry);
+        public void Remove (string entryId) {
+            var entry = _idToEntry[entryId];
+
+            if (entry.Definition.Unique) {
+                _uniqueEntries.Remove(entry);
+            } else {
+                _entries.Remove(entry.Definition);
+            }
+
+            _idToEntry.Remove(entry.Id);
+
             Events.ItemRemoved.Invoke(entry);
         }
 

@@ -5,7 +5,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
         IInventoryEvents Events { get; }
 
         IItemEntryReadOnly Get (IItemDefinition item);
-        IItemEntryReadOnly GetUnique (string id);
+        IItemEntryReadOnly Get (string entryId);
         List<IItemEntryReadOnly> GetAll (System.Type definitionType = null, string category = null);
         List<T> GetAll<T> (System.Type definitionType = null, string category = null) where T : IItemEntryReadOnly;
 
@@ -13,10 +13,10 @@ namespace CleverCrow.Fluid.ElasticInventory {
         IItemEntryReadOnly Add (IItemEntryReadOnly entry);
 
         bool Has (IItemDefinition item, int quantity = 1);
-        bool HasUnique (string id);
+        bool Has (string entryId);
 
         void Remove (IItemDefinition item, int quantity = 1);
-        void RemoveUnique (string id);
+        void Remove (string entryId);
 
         string Save ();
         void Load (string save);
