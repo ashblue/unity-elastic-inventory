@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 namespace CleverCrow.Fluid.ElasticInventory {
-    public class InventoryInstance : IInventoryInstance {
+    public partial class InventoryInstance : IInventoryInstance {
         private readonly Dictionary<string, IItemEntry> _idToEntry = new();
         private readonly Dictionary<IItemDefinition, IItemEntry> _entries = new();
         private readonly List<IItemEntry> _uniqueEntries = new();

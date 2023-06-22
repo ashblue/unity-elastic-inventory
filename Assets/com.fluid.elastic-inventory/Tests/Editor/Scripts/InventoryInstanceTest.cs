@@ -450,6 +450,120 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
             }
         }
 
+        public class Sort_Method : InventoryInstanceTest {
+            [Test]
+            public void It_should_sort_the_items_by_date_added_from_most_recent_to_latest () {
+                var entryA = A.ItemEntry().WithCreatedAt(DateTime.Now.AddDays(-1)).Build();
+                var entryB = A.ItemEntry().WithCreatedAt(DateTime.Now).Build();
+                var order = ItemOrder.Descending;
+                var sort = ItemSort.DateCreated;
+
+                var inventory = Setup();
+                inventory.Add(entryA);
+                inventory.Add(entryB);
+                var items = inventory.GetAll();
+                inventory.Sort(items, sort, order);
+
+                Assert.AreEqual(entryB, items[0]);
+                Assert.AreEqual(entryA, items[1]);
+            }
+
+            [Test]
+            public void It_should_sort_the_items_alphabetically_by_definition_name () {
+                var definitionA = A.ItemDefinition().WithDisplayName("A").Build();
+                var entryA = A.ItemEntry().WithDefinition(definitionA).Build();
+
+                var definitionB = A.ItemDefinition().WithDisplayName("B").Build();
+                var entryB = A.ItemEntry().WithDefinition(definitionB).Build();
+
+                var order = ItemOrder.Ascending;
+                var sort = ItemSort.Alphabetical;
+
+                var inventory = Setup();
+                inventory.Add(entryA);
+                inventory.Add(entryB);
+                var items = inventory.GetAll();
+                inventory.Sort(items, sort, order);
+
+                Assert.AreEqual(entryA, items[0]);
+                Assert.AreEqual(entryB, items[1]);
+            }
+
+            [Test]
+            public void It_should_sort_items_by_category () {
+                var categoryA = "B";
+                var definitionA = A.ItemDefinition().WithCategory(categoryA).Build();
+                var entryA = A.ItemEntry().WithDefinition(definitionA).Build();
+
+                var categoryB = "A";
+                var definitionB = A.ItemDefinition().WithCategory(categoryB).Build();
+                var entryB = A.ItemEntry().WithDefinition(definitionB).Build();
+
+                var order = ItemOrder.Ascending;
+                var sort = ItemSort.Category;
+
+                var inventory = Setup();
+                inventory.Add(entryA);
+                inventory.Add(entryB);
+                var items = inventory.GetAll();
+                inventory.Sort(items, sort, order);
+
+                Assert.AreEqual(entryA, items[1]);
+                Assert.AreEqual(entryB, items[0]);
+            }
+
+            [Test]
+            public void It_should_sort_by_category_then_alphabetically () {
+                var category = "A";
+                var definitionA = A.ItemDefinition().WithCategory(category).WithDisplayName("B").Build();
+                var entryA = A.ItemEntry().WithDefinition(definitionA).Build();
+
+                var definitionB = A.ItemDefinition().WithCategory(category).WithDisplayName("A").Build();
+                var entryB = A.ItemEntry().WithDefinition(definitionB).Build();
+
+                var order = ItemOrder.Ascending;
+                var sort = ItemSort.Category;
+                var sortSecondary = ItemSort.Alphabetical;
+                var orderSecondary = ItemOrder.Ascending;
+
+                var inventory = Setup();
+                inventory.Add(entryA);
+                inventory.Add(entryB);
+                var items = inventory.GetAll();
+                inventory.Sort(items, sort, order, sortSecondary, orderSecondary);
+
+                Assert.AreEqual(entryA, items[1]);
+                Assert.AreEqual(entryB, items[0]);
+            }
+
+            [Test]
+            public void It_should_handle_a_custom_category_order_when_sorting () {
+                var categoryA = "A";
+                var definitionA = A.ItemDefinition().WithCategory(categoryA).Build();
+                var entryA = A.ItemEntry().WithDefinition(definitionA).Build();
+
+                var categoryB = "B";
+                var definitionB = A.ItemDefinition().WithCategory(categoryB).Build();
+                var entryB = A.ItemEntry().WithDefinition(definitionB).Build();
+
+                var customCategorySort = new List<CategorySort> {
+                    new(categoryA, 1),
+                    new(categoryB, 0),
+                };
+
+                var order = ItemOrder.Ascending;
+                var sort = ItemSort.Category;
+                var sortSecondary = ItemSort.Alphabetical;
+                var orderSecondary = ItemOrder.Ascending;
+
+                var inventory = Setup();
+                inventory.Add(entryA);
+                inventory.Add(entryB);
+                var items = inventory.GetAll();
+                inventory.Sort(items, sort, order, sortSecondary, orderSecondary, customCategorySort);
+            }
+        }
+
         public class Save_Method : InventoryInstanceTest {
             [Test]
             public void It_should_save_the_inventory_entries_to_a_string () {

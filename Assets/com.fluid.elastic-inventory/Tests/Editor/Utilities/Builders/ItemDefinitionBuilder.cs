@@ -7,6 +7,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
         string _id = System.Guid.NewGuid().ToString();
         bool _unique;
         string _category = "Generic";
+        string _displayName = "Item";
 
         public IItemDefinition Build () {
             var definition = Substitute.For<IItemDefinition>();
@@ -14,6 +15,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
             definition.Id.Returns(_id);
             definition.Unique.Returns(_unique);
             definition.Category.Returns(_category);
+            definition.DisplayName.Returns(_displayName);
 
             _itemEntry?.Definition.Returns(definition);
             definition.CreateItemEntry(Arg.Any<int>(), Arg.Any<string>())
@@ -57,6 +59,11 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
 
         public ItemDefinitionBuilder WithCategory (string category) {
             _category = category;
+            return this;
+        }
+
+        public ItemDefinitionBuilder WithDisplayName (string displayName) {
+            _displayName = displayName;
             return this;
         }
     }
