@@ -1,15 +1,21 @@
 ﻿using System;
+using NSubstitute;
 
 namespace CleverCrow.Fluid.ElasticInventory.Testing {
     public class ItemEntryBuilder {
         private IItemDefinition _definition = A.ItemDefinition().Build();
         private int _quantity = 1;
-        private string _id;
+        private string _id = Guid.NewGuid().ToString();
         private DateTime _createdAt = DateTime.Now;
+        DateTime _updatedAt = DateTime.Now;
 
-        public ItemEntry Build () {
-            var entry = new ItemEntry();
-            entry.Setup(_definition, _quantity, _id, _createdAt);
+        public IItemEntry Build () {
+            var entry = Substitute.For<IItemEntry>();
+            entry.Definition.Returns(_definition);
+            entry.Quantity.Returns(_quantity);
+            entry.Id.Returns(_id);
+            entry.CreatedAt.Returns(_createdAt);
+            entry.UpdatedAt.Returns(_updatedAt);
 
             return entry;
         }
@@ -31,6 +37,11 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
 
         public ItemEntryBuilder WithCreatedAt (DateTime createdAt) {
             _createdAt = createdAt;
+            return this;
+        }
+
+        public ItemEntryBuilder WithUpdatedAt (DateTime updatedAt) {
+            _updatedAt = updatedAt;
             return this;
         }
     }

@@ -18,23 +18,28 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
             definition.DisplayName.Returns(_displayName);
 
             _itemEntry?.Definition.Returns(definition);
-            definition.CreateItemEntry(Arg.Any<int>(), Arg.Any<string>())
-                .Returns(info => _itemEntry ?? A.ItemEntry()
-                    .WithDefinition(definition)
-                    .WithQuantity(info.Arg<int>())
-                    .WithId(info.Arg<string>())
-                    .WithCreatedAt(DateTime.Now)
-                    .Build()
-                );
 
-            definition.CreateItemEntry(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<DateTime>())
-                .Returns(info => _itemEntry ?? A.ItemEntry()
-                    .WithDefinition(definition)
-                    .WithQuantity(info.Arg<int>())
-                    .WithId(info.Arg<string>())
-                    .WithCreatedAt(info.Arg<DateTime>())
-                    .Build()
-                );
+            definition.CreateItemEntry(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<DateTime?>(), Arg.Any<DateTime?>()).Returns(info => {
+                if (_itemEntry == null) {
+                    var entry = new ItemEntry();
+                    int arg0 = info.ArgAt<int>(0);
+                    string arg1 = info.ArgAt<string>(1);
+                    DateTime? arg2 = info.ArgAt<DateTime?>(2);
+                    DateTime? arg3 = info.ArgAt<DateTime?>(3);
+
+                    if (!arg2.HasValue && !arg3.HasValue) {
+                        entry.Setup(definition, arg0, arg1);
+                    } else if (!arg3.HasValue) {
+                        entry.Setup(definition, arg0, arg1, arg2.Value);
+                    } else {
+                        entry.Setup(definition, arg0, arg1, arg2.Value, arg3.Value);
+                    }
+
+                    return entry;
+                }
+
+                return _itemEntry;
+            });
 
             var dataResolver = new ItemEntryDataResolver();
             definition.DataResolver.Returns(dataResolver);
