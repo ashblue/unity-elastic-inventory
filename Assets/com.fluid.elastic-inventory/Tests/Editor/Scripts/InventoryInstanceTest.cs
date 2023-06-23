@@ -456,7 +456,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 var entryA = A.ItemEntry().WithCreatedAt(DateTime.Now.AddDays(-1)).Build();
                 var entryB = A.ItemEntry().WithCreatedAt(DateTime.Now).Build();
                 var order = ItemOrder.Descending;
-                var sort = ItemSort.DateCreated;
+                var sort = ItemSort.CreatedAt;
 
                 var inventory = Setup();
                 inventory.Add(entryA);
@@ -561,6 +561,23 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 inventory.Add(entryB);
                 var items = inventory.GetAll();
                 inventory.Sort(items, sort, order, sortSecondary, orderSecondary, customCategorySort);
+            }
+
+            [Test]
+            public void It_should_sort_items_by_updated_at () {
+                var entryA = A.ItemEntry().WithUpdatedAt(DateTime.Now.AddDays(-1)).Build();
+                var entryB = A.ItemEntry().WithUpdatedAt(DateTime.Now).Build();
+                var order = ItemOrder.Descending;
+                var sort = ItemSort.UpdatedAt;
+
+                var inventory = Setup();
+                inventory.Add(entryA);
+                inventory.Add(entryB);
+                var items = inventory.GetAll();
+                inventory.Sort(items, sort, order);
+
+                Assert.AreEqual(entryB, items[0]);
+                Assert.AreEqual(entryA, items[1]);
             }
         }
 

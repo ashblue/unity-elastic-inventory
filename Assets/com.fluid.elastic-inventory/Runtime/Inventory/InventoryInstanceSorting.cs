@@ -12,13 +12,16 @@ namespace CleverCrow.Fluid.ElasticInventory {
         None,
 
         // Uses the entry's date created field
-        DateCreated,
+        CreatedAt,
+
+        // Uses the entry's date updated field
+        UpdatedAt,
 
         // Sorts by display name
         Alphabetical,
 
         // Sort by category name, override with the customCategory field to assign categories to specific sort orders
-        Category
+        Category,
     }
 
     public class CategorySort {
@@ -44,7 +47,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
         /// <param name="customCategory">Allows you to provide a custom configuration for sorting categories. Providing this will override all usage of the ItemSort.Category usage</param>
         public void Sort (
             List<IItemEntryReadOnly> items,
-            ItemSort sort = ItemSort.DateCreated,
+            ItemSort sort = ItemSort.CreatedAt,
             ItemOrder order = ItemOrder.Ascending,
             ItemSort sortSecondary = ItemSort.Alphabetical,
             ItemOrder orderSecondary = ItemOrder.Ascending,
@@ -69,8 +72,11 @@ namespace CleverCrow.Fluid.ElasticInventory {
         ) {
             int result;
             switch (sort) {
-                case ItemSort.DateCreated:
+                case ItemSort.CreatedAt:
                     result = a.CreatedAt.CompareTo(b.CreatedAt);
+                    break;
+                case ItemSort.UpdatedAt:
+                    result = a.UpdatedAt.CompareTo(b.UpdatedAt);
                     break;
                 case ItemSort.Alphabetical:
                     result = string.Compare(a.Definition.DisplayName, b.Definition.DisplayName,
