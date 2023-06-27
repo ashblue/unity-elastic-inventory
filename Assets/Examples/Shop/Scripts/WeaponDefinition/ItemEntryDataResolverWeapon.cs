@@ -1,4 +1,6 @@
-﻿namespace CleverCrow.Fluid.ElasticInventory.Samples {
+﻿using CleverCrow.Fluid.ElasticInventory;
+
+namespace CleverCrow.Fluid.Examples {
     [System.Serializable]
     public class ItemEntryDataResolverWeapon : ItemEntryDataResolverBase<ItemEntryWeapon> {
         public int level;

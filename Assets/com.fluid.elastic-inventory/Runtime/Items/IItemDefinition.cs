@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace CleverCrow.Fluid.ElasticInventory {
     public interface IItemDefinition {
         /// <summary>
@@ -10,8 +8,6 @@ namespace CleverCrow.Fluid.ElasticInventory {
         string DisplayName { get; }
 
         string Category { get; }
-
-        Sprite Image { get; }
 
         /// <summary>
         /// Unique items will always have their own unique entry with a quantity of 1. Please note

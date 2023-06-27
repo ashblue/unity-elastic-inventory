@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 603027c1a6db498494d182d85a6732a0, type: 3}
-  m_Name: GenericItem
+  m_Script: {fileID: 11500000, guid: c7eda25e41964b24fb6b9fb1353e5966, type: 3}
+  m_Name: HealthPotion
   m_EditorClassIdentifier: 
-  _id: e17b002f-bed9-4d8a-9a00-fb3345c2c21d
-  _displayName: Generic Item
+  _id: 1c2d8738-26b7-4ff8-b3dc-d4946e7d8303
+  _displayName: Health Potion
   _image: {fileID: 0}
   _category: 0
