@@ -84,6 +84,9 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
 
         [InitializeOnLoadMethod]
         private static void CreateInitialDatabase () {
+            // Force the asset database to refresh in a newly cloned project so the wizard does not accidentally trigger
+            AssetDatabase.Refresh();
+
             var database = AssetDatabase.FindAssets("t:ItemDatabase");
             if (database.Length > 0) return;
 

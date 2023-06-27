@@ -82,6 +82,19 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 Assert.AreEqual(1, helper.Instance.GetAll().Count);
                 Assert.AreEqual(item, helper.Instance.Get(item).Definition);
             }
+
+            [Test]
+            public void It_should_create_multiple_unique_item_entries () {
+                var definition = A.ItemDefinition().WithUnique(true).Build();
+                var startingItems = new List<IItemEntryReadOnly> {
+                    A.ItemEntryReadOnly().WithDefinition(definition).WithQuantity(2).Build(),
+                };
+
+                var helper = Setup(startingItems: startingItems);
+                var inventory = helper.Instance;
+
+                Assert.AreEqual(2, inventory.GetAll().Count);
+            }
         }
 
         public class SaveMethod : InventoryHelperTest {

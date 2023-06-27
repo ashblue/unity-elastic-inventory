@@ -46,7 +46,15 @@ namespace CleverCrow.Fluid.ElasticInventory {
             if (!string.IsNullOrEmpty(save)) {
                 Instance.Load(save);
             } else {
-                startingItems.ForEach(i => Instance.Add(i.Definition, i.Quantity));
+                startingItems.ForEach(i => {
+                    if (i.Definition.Unique) {
+                        for (var j = 0; j < i.Quantity; j++) {
+                            Instance.Add(i.Definition);
+                        }
+                    } else {
+                        Instance.Add(i.Definition, i.Quantity);
+                    }
+                });
             }
         }
 
