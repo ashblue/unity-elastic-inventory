@@ -80,5 +80,36 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
 
             Debug.Log("END: Fixing duplicate item definition IDs.");
         }
+
+        [InitializeOnLoadMethod]
+        private static void CreateInitialDatabase () {
+            var database = AssetDatabase.FindAssets("t:ItemDatabase");
+            if (database.Length > 0) return;
+
+            if (!EditorUtility.DisplayDialog("Create Item Database",
+                    "Your project is missing an Item Database. Would you like to create one? This will create a file at Assets/Resources/ItemDatabase. This is required for Elastic Inventory to work.",
+                    "Yes",
+                    "No")) {
+                return;
+            }
+
+            // Create a resources folder if one doesn't exist
+            var resourcesPath = "Assets/Resources";
+            if (!AssetDatabase.IsValidFolder(resourcesPath)) {
+                AssetDatabase.CreateFolder("Assets", "Resources");
+            }
+
+            // Create the database
+            var path = "Assets/Resources/ItemDatabase.asset";
+            var asset = CreateInstance<ItemDatabase>();
+            AssetDatabase.CreateAsset(asset, path);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            // Show an alert to the user that the database was created
+            EditorUtility.DisplayDialog("Item Database Created",
+                "An Item Database was created at Assets/Resources/ItemDatabase. You can edit this database by selecting it in the Project window and clicking the Edit button in the inspector.\n\nPlease note that this file must be in a resources folder and keep the same name.",
+                "OK");
+        }
     }
 }

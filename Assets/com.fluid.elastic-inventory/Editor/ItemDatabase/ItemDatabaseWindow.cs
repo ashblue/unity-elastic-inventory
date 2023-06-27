@@ -37,9 +37,13 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             _page?.SyncCategories();
         }
 
-        private static void RefreshWindow (bool clear = false) {
-            var window = GetWindow<ItemDatabaseWindow>("Item Database");
-            var root = window.rootVisualElement;
+        private void RefreshWindow (bool clear = false) {
+            var root = rootVisualElement;
+
+            // In some edge cases the database may go null
+            if (_database == null) {
+                return;
+            }
 
             if (clear) {
                 root.Clear();
