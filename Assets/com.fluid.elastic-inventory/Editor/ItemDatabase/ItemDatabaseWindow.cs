@@ -6,6 +6,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
         static PageItemDatabase _page;
         const string _databasePathKey = "ElasticInventoryPath";
 
+        public static bool Dirty { get; set; }
+
         public static void ShowWindow (ItemDatabase database) {
             _database = database;
             var assetPath = AssetDatabase.GetAssetPath(database);
@@ -24,16 +26,26 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
         }
 
         void OnFocus () {
+            // If the window is marked dirty rebuild it
+            if (Dirty) {
+                RefreshWindow(true);
+                Dirty = false;
+            }
+
             // If the user edits the categories while displaying the window they get out of sync
             // This makes sure that cannot happen
             _page?.SyncCategories();
         }
 
-        private static void RefreshWindow () {
+        private static void RefreshWindow (bool clear = false) {
             var window = GetWindow<ItemDatabaseWindow>("Item Database");
-
-            window.rootVisualElement.Clear();
             var root = window.rootVisualElement;
+
+            if (clear) {
+                root.Clear();
+                _page = null;
+            }
+
             _page = new PageItemDatabase(root, _database);
         }
     }

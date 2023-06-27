@@ -28,6 +28,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
                 EditorUtility.SetDirty(database);
                 AssetDatabase.SaveAssets();
                 ItemDatabaseWindow.ShowWindow(database);
+
+                ItemDatabaseWindow.Dirty = true;
             }
 
             if (GUILayout.Button("Repair IDs")) {
@@ -71,6 +73,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
 
             if (count > 0) {
                 Debug.Log($"Fixed {count} duplicate item definition ID(s).");
+                ItemDatabaseWindow.Dirty = true;
             } else {
                 Debug.Log("No duplicate item definition IDs found. Nothing to fix.");
             }
