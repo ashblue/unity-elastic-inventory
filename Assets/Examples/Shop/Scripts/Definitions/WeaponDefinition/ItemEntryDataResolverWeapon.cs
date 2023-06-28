@@ -1,6 +1,9 @@
 ﻿using CleverCrow.Fluid.ElasticInventory;
 
 namespace CleverCrow.Fluid.Examples {
+    /// <summary>
+    /// Handle the saving and loading of editable fields for a weapon entry instance
+    /// </summary>
     [System.Serializable]
     public class ItemEntryDataResolverWeapon : ItemEntryDataResolverBase<ItemEntryWeapon> {
         public int level;

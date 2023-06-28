@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7eda25e41964b24fb6b9fb1353e5966, type: 3}
+  m_Name: CarnFlower
+  m_EditorClassIdentifier: 
+  _id: 434528fd-3fa1-4779-988e-378dcbe9063d
+  _displayName: Carn Flower
+  _image: {fileID: 21300000, guid: 2df317ecb508a4281a5a6e644e936523, type: 3}
+  _cost: 3
+  _description: The Carn Flower, a fantastical flower that grows in the heart of
+    the Eldwood Forest, is renowned in all mythical realms for its extraordinary
+    healing properties. This enchanted flora glows with a serene blue luminescence,
+    often mistaken for the light of a full moon. Its silken petals, awash with a
+    thousand shades of azure, are steeped in ancient magic. One petal, dissolved
+    in crystal-clear spring water, creates a potent elixir capable of mending the
+    gravest of injuries, revitalizing the weary, and dispelling the darkest curses.
+    In the grand tapestry of magic, the Lumina Blossom stands as a testament to the
+    gentle, restorative powers of nature.
+  _category: 0

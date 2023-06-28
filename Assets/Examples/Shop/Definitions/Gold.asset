@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fc961584b0948c5a3ccc032573e690b, type: 3}
-  m_Name: KiteShield
+  m_Script: {fileID: 11500000, guid: c7eda25e41964b24fb6b9fb1353e5966, type: 3}
+  m_Name: Gold
   m_EditorClassIdentifier: 
-  _id: 7ff07474-fe5e-40e1-a219-aef843b333d9
-  _displayName: Kite Shield
+  _id: a582a47b-621b-498a-bc1d-13af5b113963
+  _displayName: Gold
   _image: {fileID: 0}
+  _cost: 0
+  _category: 3

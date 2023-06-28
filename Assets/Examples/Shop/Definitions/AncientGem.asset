@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7eda25e41964b24fb6b9fb1353e5966, type: 3}
+  m_Name: AncientGem
+  m_EditorClassIdentifier: 
+  _id: c5d02424-8615-466c-b0ad-890cd7ad1461
+  _displayName: Ancient Gem
+  _image: {fileID: 21300000, guid: cb17d85174959467c808508d0f3c5fa8, type: 3}
+  _cost: 10
+  _description: The Seraph's Tear, an ancient gem of incomparable beauty and mystique,
+    has long been the subject of myth and legend. This gemstone, the size of a robin's
+    egg, is iridescent with a kaleidoscope of colors, each shade seemingly alive,
+    dancing and shimmering under any source of light. Thought to have been formed
+    from the teardrop of an angel, it pulses with a subtle yet palpable energy, echoing
+    the ancient epochs of its creation. The Seraph's Tear is believed to possess
+    profound magical properties, including the ability to bestow wisdom and reveal
+    truths hidden to the mortal eye. Enshrined within lore and coveted by many, this
+    ancient gem remains a timeless symbol of mystery, power, and enlightenment.
+  _category: 1

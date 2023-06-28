@@ -11,7 +11,12 @@ namespace CleverCrow.Fluid.Examples {
         [SerializeField]
         int _cost;
 
+        [TextArea]
+        [SerializeField]
+        string _description;
+
         public Sprite Image => _image;
         public int Cost => _cost;
+        public string Description => _description;
     }
 }

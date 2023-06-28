@@ -14,4 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 0144b588-bd48-45cb-87d7-a96b94e24cd7
   _displayName: Longsword
-  _image: {fileID: 0}
+  _image: {fileID: 21300000, guid: b65743150ca544a25ba382709c470005, type: 3}
+  _cost: 5
+  _description: Rustfang, the "longsword," is a comedy of errors. Made of rust-infested
+    iron with an edge as sharp as a spoon, it turns any battle into a slapstick routine.
+    Truly, it's the warrior's choice for unintentional humor on the battlefield.
+  _damage: 2
+  _energyCost: 1

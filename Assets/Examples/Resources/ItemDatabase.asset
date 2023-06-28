@@ -13,12 +13,24 @@ MonoBehaviour:
   m_Name: ItemDatabase
   m_EditorClassIdentifier: 
   _definitions:
+  - {fileID: 11400000, guid: d3988ba3f8a2c44e6a1b98201ce75ee2, type: 2}
+  - {fileID: 11400000, guid: 4e2438a1b36c043e587e88575d07b5ff, type: 2}
+  - {fileID: 11400000, guid: 5e7593ddbeb614a3984bd7fcc9251406, type: 2}
+  - {fileID: 11400000, guid: af5f8c4cbc9ca47399a535ac79bca821, type: 2}
+  - {fileID: 11400000, guid: 253e7bd4ad4eb4c3ea08b7125e4e7372, type: 2}
+  - {fileID: 11400000, guid: 8bf3e6d26a2462f4ab078b47e1925c4f, type: 2}
+  - {fileID: 11400000, guid: a4f24e396c14b4438bdac660cb3768e8, type: 2}
+  - {fileID: 11400000, guid: ab590e04be0294a76b81e859c4263afb, type: 2}
+  - {fileID: 11400000, guid: f0a0b304827894feb81ecf23309eab1c, type: 2}
+  - {fileID: 11400000, guid: e7bbdeb0bc0ba42d191d18e2ea1fc743, type: 2}
+  - {fileID: 11400000, guid: 06eaa045c74964ba182ff9156b55f42e, type: 2}
   - {fileID: 11400000, guid: ed8218179ad2a4cff97be93b37f2445b, type: 2}
   - {fileID: 11400000, guid: dec899d6e9c7a44e6bdfc1ab1b33cfd6, type: 2}
-  - {fileID: 11400000, guid: 8bf3e6d26a2462f4ab078b47e1925c4f, type: 2}
-  - {fileID: 11400000, guid: ae50e12664dd048318fd7a64be7f8837, type: 2}
   - {fileID: 11400000, guid: 9f77921cfc0df4d3996ebcabcf7b4f4c, type: 2}
   _categories:
   - Default
   - Important
   - Weapon
+  - Hide
+  - Potion
+  - Recipe
