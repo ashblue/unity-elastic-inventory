@@ -21,7 +21,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
         public IInventoryInstance Instance => _internal?.Instance;
 
-        void Start () {
+        void Awake () {
             _internal = new InventoryHelperInternal(_id, _startingItems.ToList<IItemEntryReadOnly>(),
                 ItemDatabase.Current, GlobalDatabaseManager.Instance.Database);
         }

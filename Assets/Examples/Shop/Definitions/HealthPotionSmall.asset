@@ -18,11 +18,5 @@ MonoBehaviour:
   _cost: 10
   _description: The Healing Potion of Halcyon is the stuff of legends, whispered
     among the ancient circles of magical healers. Its liquid glows with a radiant
-    luminescence, reflecting a mesmerizing blend of soothing hues. The taste, an
-    ambrosial mixture of the sweetest nectars and finest honey, is only surpassed
-    by its tantalizing aroma, promising instantaneous alleviation of suffering. Each
-    sip of this celestial concoction is imbued with the vital essence of life itself,
-    potent enough to close even the most grievous wounds, invigorate the spirit,
-    and restore the weary back to their prime. Hence, the Healing Potion of Halcyon
-    holds a revered place in the chronicles of magical healing.
+    luminescence, reflecting a mesmerizing blend of soothing hues..
   _healAmount: 5

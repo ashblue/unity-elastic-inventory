@@ -40,6 +40,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
             }
 
             Events.ItemAdded.Invoke(entry);
+            Events.ItemChanged.Invoke(entry);
 
             return entry;
         }
@@ -88,6 +89,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
             }
 
             Events.ItemRemoved.Invoke(entry);
+            Events.ItemChanged.Invoke(entry);
         }
 
         public void Remove (string entryId) {
@@ -102,6 +104,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
             _idToEntry.Remove(entry.Id);
 
             Events.ItemRemoved.Invoke(entry);
+            Events.ItemChanged.Invoke(entry);
         }
 
         public string Save () {

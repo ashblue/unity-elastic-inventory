@@ -17,15 +17,5 @@ MonoBehaviour:
   _image: {fileID: 21300000, guid: 902a87e2441f94725a8ff152d8188fa7, type: 3}
   _cost: 10
   _description: Stariron, an ethereal metal famed across the fantasy realms, is one
-    of the most treasured resources for crafting. Harvested from fallen stars that
-    have graced the earth with their celestial touch, it embodies a mix of both the
-    terrestrial and the astral. Its otherworldly, metallic sheen shimmers with the
-    subtle hints of starlight, displaying a dance of colors that seem to change with
-    the viewer's perspective. Known for its superior strength and light weight, Stariron
-    is highly valued in blacksmithing. It's said that a skilled artisan can mold
-    Stariron into items of unparalleled quality, resulting in armor that provides
-    impenetrable protection, or weapons that strike with the force of a falling star.
-    Thus, Stariron continues to be the heartbeat of legendary craft, the source of
-    tales of heroes and warriors, and a symbol of celestial resilience and earthly
-    tenacity.
+    of the most treasured resources for crafting.
   _category: 0

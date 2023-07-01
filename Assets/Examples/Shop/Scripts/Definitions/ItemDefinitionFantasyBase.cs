@@ -11,7 +11,7 @@ namespace CleverCrow.Fluid.Examples {
         [SerializeField]
         int _cost;
 
-        [TextArea]
+        [TextArea(3, 10)]
         [SerializeField]
         string _description;
 

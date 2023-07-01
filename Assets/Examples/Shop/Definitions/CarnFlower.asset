@@ -18,11 +18,5 @@ MonoBehaviour:
   _cost: 3
   _description: The Carn Flower, a fantastical flower that grows in the heart of
     the Eldwood Forest, is renowned in all mythical realms for its extraordinary
-    healing properties. This enchanted flora glows with a serene blue luminescence,
-    often mistaken for the light of a full moon. Its silken petals, awash with a
-    thousand shades of azure, are steeped in ancient magic. One petal, dissolved
-    in crystal-clear spring water, creates a potent elixir capable of mending the
-    gravest of injuries, revitalizing the weary, and dispelling the darkest curses.
-    In the grand tapestry of magic, the Lumina Blossom stands as a testament to the
-    gentle, restorative powers of nature.
+    healing properties.
   _category: 0

@@ -7,8 +7,6 @@ namespace CleverCrow.Fluid.Examples {
         List<GameObject> _menus;
 
         public void ShowMenu (GameObject menu) {
-            Debug.Log("Show menu");
-
             foreach (var m in _menus) {
                 m.SetActive(false);
             }

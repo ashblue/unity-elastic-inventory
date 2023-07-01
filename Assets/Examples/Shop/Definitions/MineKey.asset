@@ -18,12 +18,5 @@ MonoBehaviour:
   _cost: 0
   _description: The Veinseeker Key, a symbol of authority and perseverance, is a
     legendary artifact crafted specifically for the unfathomable depths of the Crystalline
-    Caverns. Forged from unyielding bedrock steel and adorned with intricate patterns
-    of gem dust, this key embodies the heart and soul of generations of miners who
-    have braved the labyrinthine tunnels below. Its heavy, angular structure conceals
-    a magical core that reacts to the unique mineral formations within the Caverns.
-    The Veinseeker Key hums gently in the presence of valuable veins, guiding miners
-    through darkness and danger to hidden riches. Despite its humble appearance,
-    it is the key to unlocking the earth's bountiful treasures and remains an iconic
-    testament to the miners' relentless spirit.
+    Caverns.
   _category: 1

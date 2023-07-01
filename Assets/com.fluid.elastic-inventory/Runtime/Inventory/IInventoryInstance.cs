@@ -18,6 +18,15 @@ namespace CleverCrow.Fluid.ElasticInventory {
         void Remove (IItemDefinition item, int quantity = 1);
         void Remove (string entryId);
 
+        void Sort (
+            List<IItemEntryReadOnly> items,
+            ItemSort sort = ItemSort.CreatedAt,
+            ItemOrder order = ItemOrder.Ascending,
+            ItemSort sortSecondary = ItemSort.Alphabetical,
+            ItemOrder orderSecondary = ItemOrder.Ascending,
+            List<CategorySort> customCategory = null
+        );
+
         string Save ();
         void Load (string save);
     }

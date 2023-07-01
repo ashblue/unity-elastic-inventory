@@ -17,12 +17,5 @@ MonoBehaviour:
   _image: {fileID: 21300000, guid: cb17d85174959467c808508d0f3c5fa8, type: 3}
   _cost: 10
   _description: The Seraph's Tear, an ancient gem of incomparable beauty and mystique,
-    has long been the subject of myth and legend. This gemstone, the size of a robin's
-    egg, is iridescent with a kaleidoscope of colors, each shade seemingly alive,
-    dancing and shimmering under any source of light. Thought to have been formed
-    from the teardrop of an angel, it pulses with a subtle yet palpable energy, echoing
-    the ancient epochs of its creation. The Seraph's Tear is believed to possess
-    profound magical properties, including the ability to bestow wisdom and reveal
-    truths hidden to the mortal eye. Enshrined within lore and coveted by many, this
-    ancient gem remains a timeless symbol of mystery, power, and enlightenment.
+    has long been the subject of myth and legend.
   _category: 1
