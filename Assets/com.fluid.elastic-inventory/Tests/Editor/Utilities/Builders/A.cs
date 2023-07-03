@@ -11,5 +11,9 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
         public static ItemEntryBuilder ItemEntry () {
             return new ItemEntryBuilder();
         }
+
+        public static ItemDatabaseBuilder ItemDatabase () {
+            return new ItemDatabaseBuilder();
+        }
     }
 }

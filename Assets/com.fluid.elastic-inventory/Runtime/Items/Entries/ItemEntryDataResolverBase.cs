@@ -15,8 +15,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public string definitionId;
         public string uniqueId;
         public int quantity;
-        public string createdAt;
-        public string updatedAt;
+        public int createdAt;
+        public int updatedAt;
 
         public string Save (IItemEntryReadOnly entry) {
             Reset();
@@ -24,8 +24,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
             definitionId = entry.Definition.Id;
             uniqueId = entry.Id;
             quantity = entry.Quantity;
-            createdAt = entry.CreatedAt.ToString(CultureInfo.InvariantCulture);
-            updatedAt = entry.UpdatedAt.ToString(CultureInfo.InvariantCulture);
+            createdAt = entry.CreatedAt;
+            updatedAt = entry.UpdatedAt;
 
             OnSave((T)entry);
 
@@ -36,9 +36,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
             Reset();
             JsonUtility.FromJsonOverwrite(json, this);
 
-            var createdAtRestore = DateTime.Parse(createdAt, CultureInfo.InvariantCulture);
-            var lastUpdatedAtRestore = DateTime.Parse(updatedAt, CultureInfo.InvariantCulture);
-            var entry = database.Get(definitionId).CreateItemEntry(quantity, uniqueId, createdAtRestore, lastUpdatedAtRestore);
+            var entry = database.Get(definitionId).CreateItemEntry(database, quantity, uniqueId, createdAt, updatedAt);
 
             OnLoad((T)entry);
 
@@ -49,8 +47,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
             definitionId = null;
             uniqueId = null;
             quantity = 0;
-            createdAt = null;
-            updatedAt = null;
+            createdAt = 0;
+            updatedAt = 0;
 
             OnReset();
         }

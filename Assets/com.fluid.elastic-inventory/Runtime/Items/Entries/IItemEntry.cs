@@ -6,8 +6,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
         string Id { get; }
         IItemDefinition Definition { get; }
         int Quantity { get; }
-        System.DateTime CreatedAt { get; }
-        System.DateTime UpdatedAt { get; }
+        int CreatedAt { get; }
+        int UpdatedAt { get; }
 
         void UpdateTimeLogs ();
     }
@@ -17,11 +17,12 @@ namespace CleverCrow.Fluid.ElasticInventory {
         /// Only called once for you automatically. DO NOT call this for any reason in your code. The sky will fall.
         /// </summary>
         void Setup (
+            IItemDatabase database,
             IItemDefinition definition,
             int quantity = 1,
             string id = null,
-            System.DateTime? createdAt = null,
-            System.DateTime? updatedAt = null
+            int? createdAt = null,
+            int? updatedAt = null
         );
 
         T GetDefinition<T> () where T : IItemDefinition;

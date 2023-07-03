@@ -5,5 +5,6 @@ namespace CleverCrow.Fluid.ElasticInventory {
         List<string> Categories { get; }
 
         IItemDefinition Get (string id);
+        int GetUniqueIndex ();
     }
 }

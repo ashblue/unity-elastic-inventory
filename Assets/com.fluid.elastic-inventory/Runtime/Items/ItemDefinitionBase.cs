@@ -14,9 +14,9 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public virtual IItemEntryDataResolver DataResolver { get; } = new ItemEntryDataResolver();
         public abstract string Category { get; }
 
-        public virtual IItemEntry CreateItemEntry (int quantity = 1, string id = null, System.DateTime? createdAt = null, System.DateTime? updatedAt = null) {
+        public virtual IItemEntry CreateItemEntry (IItemDatabase database, int quantity = 1, string id = null, int? createdAt = null, int? updatedAt = null) {
             var entry = new ItemEntry();
-            entry.Setup(this, quantity, id, createdAt, updatedAt);
+            entry.Setup(database, this, quantity, id, createdAt, updatedAt);
 
             return entry;
         }

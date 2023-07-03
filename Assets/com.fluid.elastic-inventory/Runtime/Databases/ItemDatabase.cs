@@ -17,19 +17,18 @@ namespace CleverCrow.Fluid.ElasticInventory {
     public class ItemDatabase : SettingsBase<ItemDatabase>, IItemDatabase {
         ItemDatabaseInternal _internal;
 
-        /// <summary>
-        /// DO NOT ever edit this. Must be public for Unity serialization purposes
-        /// </summary>
+        [Tooltip("Automatically load save data from the global database manager at initial creation. Should only disable if you want to implement your own save and load system for items")]
+        [SerializeField]
+        bool _autoLoad = true;
+
+        [Tooltip("DO NOT edit this directly. Must be public for Unity serialization purposes")]
         public List<ItemDefinitionBase> _definitions = new();
 
+        [Tooltip("Add new categories here. You can also use this to filter items in the inventory UI")]
         [SerializeField]
         List<string> _categories = new() {
             "Default",
         };
-
-        [Tooltip("Automatically load save data from the global database manager at initial creation. Should only disable if you want to implement your own save and load system for items")]
-        [SerializeField]
-        bool _autoLoad = true;
 
         public List<string> Categories => _categories;
 

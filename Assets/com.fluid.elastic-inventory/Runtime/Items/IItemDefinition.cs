@@ -18,10 +18,11 @@ namespace CleverCrow.Fluid.ElasticInventory {
         IItemEntryDataResolver DataResolver { get; }
 
         IItemEntry CreateItemEntry (
+            IItemDatabase database,
             int quantity = 1,
             string id = null,
-            System.DateTime? createdAt = null,
-            System.DateTime? updatedAt = null
+            int? createdAt = null,
+            int? updatedAt = null
         );
     }
 }

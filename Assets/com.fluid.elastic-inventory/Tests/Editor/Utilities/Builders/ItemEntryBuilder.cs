@@ -6,8 +6,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
         private IItemDefinition _definition = A.ItemDefinition().Build();
         private int _quantity = 1;
         private string _id = Guid.NewGuid().ToString();
-        private DateTime _createdAt = DateTime.Now;
-        DateTime _updatedAt = DateTime.Now;
+        int _createdAt;
+        int _updatedAt;
 
         public IItemEntry Build () {
             var entry = Substitute.For<IItemEntry>();
@@ -35,12 +35,12 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
             return this;
         }
 
-        public ItemEntryBuilder WithCreatedAt (DateTime createdAt) {
+        public ItemEntryBuilder WithCreatedAt (int createdAt) {
             _createdAt = createdAt;
             return this;
         }
 
-        public ItemEntryBuilder WithUpdatedAt (DateTime updatedAt) {
+        public ItemEntryBuilder WithUpdatedAt (int updatedAt) {
             _updatedAt = updatedAt;
             return this;
         }

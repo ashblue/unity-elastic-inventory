@@ -19,20 +19,27 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
 
             _itemEntry?.Definition.Returns(definition);
 
-            definition.CreateItemEntry(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<DateTime?>(), Arg.Any<DateTime?>()).Returns(info => {
+            definition.CreateItemEntry(
+                Arg.Any<IItemDatabase>(),
+                Arg.Any<int>(),
+                Arg.Any<string>(),
+                Arg.Any<int?>(),
+                Arg.Any<int?>()
+            ).Returns(info => {
                 if (_itemEntry == null) {
                     var entry = new ItemEntry();
-                    int arg0 = info.ArgAt<int>(0);
-                    string arg1 = info.ArgAt<string>(1);
-                    DateTime? arg2 = info.ArgAt<DateTime?>(2);
-                    DateTime? arg3 = info.ArgAt<DateTime?>(3);
+                    IItemDatabase db = info.ArgAt<IItemDatabase>(0);
+                    int arg0 = info.ArgAt<int>(1);
+                    string arg1 = info.ArgAt<string>(2);
+                    int? arg2 = info.ArgAt<int?>(3);
+                    int? arg3 = info.ArgAt<int?>(4);
 
                     if (!arg2.HasValue && !arg3.HasValue) {
-                        entry.Setup(definition, arg0, arg1);
+                        entry.Setup(db, definition, arg0, arg1);
                     } else if (!arg3.HasValue) {
-                        entry.Setup(definition, arg0, arg1, arg2.Value);
+                        entry.Setup(db, definition, arg0, arg1, arg2.Value);
                     } else {
-                        entry.Setup(definition, arg0, arg1, arg2.Value, arg3.Value);
+                        entry.Setup(db, definition, arg0, arg1, arg2.Value, arg3.Value);
                     }
 
                     return entry;

@@ -122,11 +122,12 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 [Test]
                 public void It_should_call_create_item_entry_with_the_passed_quantity () {
                     var item = A.ItemDefinition().Build();
+                    var database = A.ItemDatabase().Build();
 
-                    var inventory = Setup();
+                    var inventory = Setup(database);
                     inventory.Add(item, 2);
 
-                    item.Received().CreateItemEntry(2);
+                    item.Received().CreateItemEntry(database, 2);
                 }
 
                 [Test]
@@ -453,8 +454,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
         public class Sort_Method : InventoryInstanceTest {
             [Test]
             public void It_should_sort_the_items_by_date_added_from_most_recent_to_latest () {
-                var entryA = A.ItemEntry().WithCreatedAt(DateTime.Now.AddDays(-1)).Build();
-                var entryB = A.ItemEntry().WithCreatedAt(DateTime.Now).Build();
+                var entryA = A.ItemEntry().WithCreatedAt(0).Build();
+                var entryB = A.ItemEntry().WithCreatedAt(1).Build();
                 var order = ItemOrder.Descending;
                 var sort = ItemSort.CreatedAt;
 
@@ -565,8 +566,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
 
             [Test]
             public void It_should_sort_items_by_updated_at () {
-                var entryA = A.ItemEntry().WithUpdatedAt(DateTime.Now.AddDays(-1)).Build();
-                var entryB = A.ItemEntry().WithUpdatedAt(DateTime.Now).Build();
+                var entryA = A.ItemEntry().WithUpdatedAt(0).Build();
+                var entryB = A.ItemEntry().WithUpdatedAt(1).Build();
                 var order = ItemOrder.Descending;
                 var sort = ItemSort.UpdatedAt;
 
@@ -669,7 +670,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 var definition = A.ItemDefinition().Build();
                 var entry = A.ItemEntry()
                     .WithId(id)
-                    .WithCreatedAt(DateTime.Now.AddDays(-7))
+                    .WithCreatedAt(-1)
                     .WithDefinition(definition)
                     .Build();
 

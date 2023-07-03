@@ -17,8 +17,8 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public string Id => null;
         // This should never be less than zero. The minimum value will always be 1
         public int Quantity => _quantity < 1 ? 1 : _quantity;
-        public System.DateTime CreatedAt { get; } = System.DateTime.Now;
-        public System.DateTime UpdatedAt { get; } = System.DateTime.Now;
+        public int CreatedAt => 0;
+        public int UpdatedAt => 0;
 
         public void UpdateTimeLogs () {
             throw new System.NotImplementedException();

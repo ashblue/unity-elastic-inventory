@@ -20,9 +20,9 @@ namespace CleverCrow.Fluid.Examples {
         public int Damage => _damage;
         public int EnergyCost => _energyCost;
 
-        public override IItemEntry CreateItemEntry (int quantity = 1, string id = null, System.DateTime? createdAt = null, System.DateTime? updatedAt = null) {
+        public override IItemEntry CreateItemEntry (IItemDatabase database, int quantity = 1, string id = null, int? createdAt = null, int? updatedAt = null) {
             var entry = new ItemEntryWeapon();
-            entry.Setup(this, quantity, id, createdAt, updatedAt);
+            entry.Setup(database, this, quantity, id, createdAt, updatedAt);
 
             return entry;
         }

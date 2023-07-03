@@ -46,7 +46,12 @@ namespace CleverCrow.Fluid.ElasticInventory {
             if (!string.IsNullOrEmpty(save)) {
                 Instance.Load(save);
             } else {
-                startingItems.ForEach(i => {
+                // Reverse the items so the first item in the list is the last item added. This is to ensure that lists
+                // sorted by last modified descending will be correct
+                var flippedItems = startingItems.ToList();
+                flippedItems.Reverse();
+
+                flippedItems.ForEach(i => {
                     if (i.Definition.Unique) {
                         for (var j = 0; j < i.Quantity; j++) {
                             Instance.Add(i.Definition);
