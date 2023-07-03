@@ -61,6 +61,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
             // Unique items and items without existing quantities can be added directly
             if (entry.Definition.Unique || !Has(entry.Definition)) {
                 AddEntry(entry as IItemEntry);
+                entry.UpdateTimeLogs();
                 return entry;
             }
 
@@ -69,7 +70,6 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
         private void AddEntry (IItemEntry entry) {
             if (entry.Definition.Unique) {
-                entry.UpdateTimeLogs();
                 _uniqueEntries.Add(entry);
             } else {
                 _entries.Add(entry.Definition, entry);

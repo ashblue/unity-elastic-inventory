@@ -1388,7 +1388,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Inventory
+  m_text: Shop
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1894,7 +1894,7 @@ GameObject:
   - component: {fileID: 544734520}
   - component: {fileID: 544734521}
   m_Layer: 0
-  m_Name: List
+  m_Name: Options
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3299,7 +3299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b350877d51674b3193e6c53afd7be4a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 7bdc95b5-a3e5-4b93-8e1d-5fa88fa64dc7
+  _id: player-inventory
   _startingItems:
   - _definition: {fileID: 11400000, guid: 8bf3e6d26a2462f4ab078b47e1925c4f, type: 2}
     _quantity: 2
@@ -4589,7 +4589,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1152532699}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1852522444}
+        m_TargetAssemblyTypeName: CleverCrow.Fluid.Examples.InventorySaveHelper,
+          Assembly-CSharp
+        m_MethodName: Save
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1152532699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5575,7 +5588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b350877d51674b3193e6c53afd7be4a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 7bdc95b5-a3e5-4b93-8e1d-5fa88fa64dc7
+  _id: shop-inventory
   _startingItems:
   - _definition: {fileID: 11400000, guid: ed8218179ad2a4cff97be93b37f2445b, type: 2}
     _quantity: 2
@@ -5583,8 +5596,6 @@ MonoBehaviour:
     _quantity: 0
   - _definition: {fileID: 11400000, guid: 8bf3e6d26a2462f4ab078b47e1925c4f, type: 2}
     _quantity: 5
-  - _definition: {fileID: 11400000, guid: 06eaa045c74964ba182ff9156b55f42e, type: 2}
-    _quantity: 300
   - _definition: {fileID: 11400000, guid: f0a0b304827894feb81ecf23309eab1c, type: 2}
     _quantity: 20
 --- !u!1 &1511860956
@@ -6605,7 +6616,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1793038688}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1852522444}
+        m_TargetAssemblyTypeName: CleverCrow.Fluid.Examples.InventorySaveHelper,
+          Assembly-CSharp
+        m_MethodName: DeleteSaves
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1793038688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7006,6 +7030,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1852522443}
+  - component: {fileID: 1852522444}
   m_Layer: 0
   m_Name: Inventories
   m_TagString: Untagged
@@ -7030,6 +7055,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1852522444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852522442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb3ccbff6f784643902212f38685ee21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventories:
+  - {fileID: 815783740}
+  - {fileID: 1391167204}
 --- !u!1 &1871216337
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,7 +15,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             EditorGUILayout.LabelField("Current Inventory:");
 
             foreach (var item in allItems) {
-                EditorGUILayout.LabelField($"- {item.Definition.DisplayName}, Quantity: {item.Quantity}");
+                var quantity = item.Quantity > 1 ? item.Quantity + " " : "";
+                EditorGUILayout.LabelField($"- {quantity}{item.Definition.DisplayName}");
             }
         }
     }

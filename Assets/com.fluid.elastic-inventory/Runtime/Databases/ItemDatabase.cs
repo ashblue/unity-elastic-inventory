@@ -34,7 +34,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
         protected override void OnSetup () {
             _internal = new ItemDatabaseInternal(_definitions.Cast<IItemDefinition>().ToList());
-            if (_autoLoad) LoadFromDatabase();
+            if (_autoLoad) Load();
         }
 
         public IItemDefinition Get (string id) {
@@ -51,30 +51,30 @@ namespace CleverCrow.Fluid.ElasticInventory {
         /// <summary>
         /// Helper method to save to the global database manager
         /// </summary>
-        public void SaveToDatabase () {
-            var save = _internal.Save();
+        public void Save () {
+            var save = SaveManual();
             GlobalDatabaseManager.Instance.Database.Strings.Set("ItemDatabase", save);
         }
 
         /// <summary>
         /// Save method so you can handle the save data however you want
         /// </summary>
-        public string Save () {
+        public string SaveManual () {
             return _internal.Save();
         }
 
         /// <summary>
         /// Helper method to load from the global database manager
         /// </summary>
-        public void LoadFromDatabase () {
+        public void Load () {
             var save = GlobalDatabaseManager.Instance.Database.Strings.Get("ItemDatabase");
-            if (save != null) Load(save);
+            if (save != null) LoadManual(save);
         }
 
         /// <summary>
         /// Load method so you can inject save data manually
         /// </summary>
-        public void Load (string save) {
+        public void LoadManual (string save) {
             _internal.Load(save);
         }
     }
