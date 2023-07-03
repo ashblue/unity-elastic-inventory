@@ -14,7 +14,7 @@ namespace CleverCrow.Fluid.Examples {
 
         void Start () {
             var entry = _inventory.Instance.Get(_itemDefinition);
-            _text.text = entry.Quantity.ToString();
+            _text.text = entry != null ? entry.Quantity.ToString() : "0";
 
             _inventory.Instance.Events.ItemChanged.AddListener(OnItemChange);
         }

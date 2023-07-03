@@ -68,7 +68,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     var inventory = Setup();
 
                     var instance = inventory.Add(item);
-                    var result = inventory.Get(instance.Id);
+                    var result = inventory.GetEntry(instance.Id);
 
                     Assert.AreEqual(instance, result);
                 }
@@ -93,7 +93,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     var inventory = Setup();
 
                     Assert.DoesNotThrow(() => {
-                        inventory.Add(null);
+                        inventory.AddEntry(null);
                     });
                 }
 
@@ -144,7 +144,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     var entry = A.ItemEntry().WithQuantity(2).Build();
 
                     var inventory = Setup();
-                    inventory.Add(entry);
+                    inventory.AddEntry(entry);
                     var result = inventory.Get(entry.Definition);
 
                     Assert.AreEqual(entry.Quantity, result.Quantity);
@@ -169,8 +169,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     var entry = A.ItemEntry().WithDefinition(definition).Build();
                     var inventory = Setup();
 
-                    inventory.Add(entry);
-                    var result = inventory.Get(entry.Id);
+                    inventory.AddEntry(entry);
+                    var result = inventory.GetEntry(entry.Id);
 
                     Assert.AreEqual(entry, result);
                 }
@@ -271,7 +271,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     var inventory = Setup();
 
                     var entry = inventory.Add(item);
-                    var result = inventory.Has(entry.Id);
+                    var result = inventory.HasEntry(entry.Id);
 
                     Assert.IsTrue(result);
                 }
@@ -343,9 +343,9 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     var inventory = Setup();
 
                     var instance = inventory.Add(definition);
-                    inventory.Remove(instance.Id);
+                    inventory.RemoveEntry(instance.Id);
 
-                    Assert.IsFalse(inventory.Has(instance.Id));
+                    Assert.IsFalse(inventory.HasEntry(instance.Id));
                 }
 
                 [Test]
@@ -404,7 +404,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                     });
 
                     var instance = inventory.Add(item);
-                    inventory.Remove(instance.Id);
+                    inventory.RemoveEntry(instance.Id);
 
                     Assert.IsTrue(eventTriggered);
                 }
@@ -459,8 +459,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 var sort = ItemSort.CreatedAt;
 
                 var inventory = Setup();
-                inventory.Add(entryA);
-                inventory.Add(entryB);
+                inventory.AddEntry(entryA);
+                inventory.AddEntry(entryB);
                 var items = inventory.GetAll();
                 inventory.Sort(items, sort, order);
 
@@ -480,8 +480,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 var sort = ItemSort.Alphabetical;
 
                 var inventory = Setup();
-                inventory.Add(entryA);
-                inventory.Add(entryB);
+                inventory.AddEntry(entryA);
+                inventory.AddEntry(entryB);
                 var items = inventory.GetAll();
                 inventory.Sort(items, sort, order);
 
@@ -503,8 +503,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 var sort = ItemSort.Category;
 
                 var inventory = Setup();
-                inventory.Add(entryA);
-                inventory.Add(entryB);
+                inventory.AddEntry(entryA);
+                inventory.AddEntry(entryB);
                 var items = inventory.GetAll();
                 inventory.Sort(items, sort, order);
 
@@ -527,8 +527,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 var orderSecondary = ItemOrder.Ascending;
 
                 var inventory = Setup();
-                inventory.Add(entryA);
-                inventory.Add(entryB);
+                inventory.AddEntry(entryA);
+                inventory.AddEntry(entryB);
                 var items = inventory.GetAll();
                 inventory.Sort(items, sort, order, sortSecondary, orderSecondary);
 
@@ -557,8 +557,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 var orderSecondary = ItemOrder.Ascending;
 
                 var inventory = Setup();
-                inventory.Add(entryA);
-                inventory.Add(entryB);
+                inventory.AddEntry(entryA);
+                inventory.AddEntry(entryB);
                 var items = inventory.GetAll();
                 inventory.Sort(items, sort, order, sortSecondary, orderSecondary, customCategorySort);
             }
@@ -571,8 +571,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 var sort = ItemSort.UpdatedAt;
 
                 var inventory = Setup();
-                inventory.Add(entryA);
-                inventory.Add(entryB);
+                inventory.AddEntry(entryA);
+                inventory.AddEntry(entryB);
                 var items = inventory.GetAll();
                 inventory.Sort(items, sort, order);
 
@@ -639,7 +639,7 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 var newInventory = Setup(database);
                 newInventory.Load(save);
 
-                Assert.IsNotNull(newInventory.Get(oldItem.Id));
+                Assert.IsNotNull(newInventory.GetEntry(oldItem.Id));
             }
 
             [Test]
@@ -658,8 +658,8 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 var newInventory = Setup(database);
                 newInventory.Load(save);
 
-                Assert.IsNotNull(newInventory.Get(oldItem.Id));
-                Assert.IsNotNull(newInventory.Get(oldItem2.Id));
+                Assert.IsNotNull(newInventory.GetEntry(oldItem.Id));
+                Assert.IsNotNull(newInventory.GetEntry(oldItem2.Id));
             }
 
             [Test]
@@ -677,12 +677,12 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 database.Get(definition.Id).Returns(definition);
 
                 var inventory = Setup(database);
-                inventory.Add(entry);
+                inventory.AddEntry(entry);
                 var save = inventory.Save();
 
                 var newInventory = Setup(database);
                 newInventory.Load(save);
-                var loadedEntry = newInventory.Get(id);
+                var loadedEntry = newInventory.GetEntry(id);
 
                 Assert.AreEqual(entry.CreatedAt.ToString(), loadedEntry.CreatedAt.ToString());
             }

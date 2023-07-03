@@ -15,11 +15,15 @@ namespace CleverCrow.Fluid.Examples {
 
         public void Setup (ItemDefinitionFantasyBase definition, int quantity) {
             _image.sprite = definition.Image;
-            _quantity.text = quantity == 1 ? "" : quantity.ToString();
+            SetQuantity(quantity);
         }
 
         public void AddClick (Action action) {
             _button.onClick.AddListener(() => action());
+        }
+
+        public void SetQuantity (int quantity) {
+            _quantity.text = quantity == 1 ? "" : quantity.ToString();
         }
     }
 }
