@@ -17,11 +17,11 @@ namespace CleverCrow.Fluid.ElasticInventory {
 
         bool Has (IItemDefinition item, int quantity = 1);
         bool Has (string definitionId, int quantity = 1);
-        bool HasEntry (string entryId);
+        bool HasEntry (string entryId, int quantity = 1);
 
         void Remove (IItemDefinition item, int quantity = 1);
         void Remove (string definitionId, int quantity = 1);
-        void RemoveEntry (string entryId);
+        void RemoveEntry (string entryId, int quantity = 1);
 
         void Sort (
             List<IItemEntryReadOnly> items,
