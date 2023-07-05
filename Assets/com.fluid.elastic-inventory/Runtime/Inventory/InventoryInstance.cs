@@ -88,8 +88,12 @@ namespace CleverCrow.Fluid.ElasticInventory {
             return definition != null && Has(definition, quantity);
         }
 
-        public bool HasEntry (string entryId) {
-            return _idToEntry.ContainsKey(entryId);
+        public bool HasEntry (string entryId, int quantity = 1) {
+            var entry = GetEntry(entryId);
+            if (entry == null) return false;
+            if (!entry.Definition.Unique) return Has(entry.Definition, quantity);
+
+            return true;
         }
 
         public void Remove (IItemDefinition item, int quantity = 1) {
@@ -114,16 +118,22 @@ namespace CleverCrow.Fluid.ElasticInventory {
             Remove(definition, quantity);
         }
 
-        public void RemoveEntry (string entryId) {
+        /// <summary>
+        /// Remove an item entry by its unique ID
+        /// </summary>
+        /// <param name="entryId"></param>
+        /// <param name="quantity">Please note this will not remove multiple unique items. You must manually pass in the IDs for each one</param>
+        public void RemoveEntry (string entryId, int quantity = 1) {
             var entry = _idToEntry[entryId];
 
-            if (entry.Definition.Unique) {
-                _uniqueEntries.Remove(entry);
-                _idToEntry.Remove(entry.Id);
-            } else {
-                Remove(entry.Definition);
+            // Leave the implementation up to the remove method
+            if (!entry.Definition.Unique) {
+                Remove(entry.Definition, quantity);
                 return;
             }
+
+            _uniqueEntries.Remove(entry);
+            _idToEntry.Remove(entry.Id);
 
             Events.ItemRemoved.Invoke(entry);
             Events.ItemChanged.Invoke(entry);
