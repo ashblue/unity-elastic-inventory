@@ -1,32 +1,12 @@
 {
   "name": "com.fluid.elastic-inventory",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "displayName": "Elastic Inventory",
   "description": "A simple inventory micro-framework built with extendability in mind",
   "unity": "2022.2",
   "dependencies": {
-    "com.fluid.simple-settings": "1.0.1",
-    "com.fluid.database": "2.1.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ashblue/unity-elastic-inventory.git"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ashblue/unity-elastic-inventory/issues"
-  },
-  "homepage": "https://github.com/ashblue/unity-elastic-inventory#readme",
-  "keywords": [
-    "unity3d",
-    "unity package",
-    "upm",
-    "inventory",
-    "inventory management"
-  ],
-  "author": {
-    "name": "Ash Blue",
-    "email": "ash@clevercrowgames.com",
-    "url": "https://blueashes.com"
+      "com.fluid.simple-settings": "1.0.1",
+      "com.fluid.database": "2.1.0",
+      "com.fluid.unity-event-plus": "1.2.0"
   }
 }

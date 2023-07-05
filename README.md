@@ -110,7 +110,7 @@ Elastic Inventory is used through [Unity's Package Manager](https://docs.unity3d
     }
   ],
   "dependencies": {
-    "com.fluid.elastic-inventory": "1.0.0"
+    "com.fluid.elastic-inventory": "1.0.1"
   }
 }
 ```
