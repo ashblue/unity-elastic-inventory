@@ -8,7 +8,8 @@
   "scripts": {
     "build": "node build.js",
     "semantic-release": "semantic-release",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "prepare": "husky install"
   },
   "keywords": [
   "unity3d",
@@ -17,11 +18,6 @@
   "inventory",
   "inventory management"
 ],
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ashblue/unity-elastic-inventory.git"
