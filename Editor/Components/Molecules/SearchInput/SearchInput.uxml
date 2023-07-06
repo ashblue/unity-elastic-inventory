@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="search-input" class="search-input" style="flex-direction: row;">
+        <ui:Label text="Search" style="flex-grow: 0; color: grey;" name="placeholderLabel" />
+        <ui:TextField class="search-input__text" name="search-input__text" style="width: 100px" />
+    </ui:VisualElement>
+</ui:UXML>
+
+

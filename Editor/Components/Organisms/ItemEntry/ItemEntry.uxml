@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="./ItemEntry.uss" />
+
+    <ui:VisualElement name="item-entry" class="item-entry">
+        <ui:VisualElement class="item-entry__section">
+            <ui:Label name="item-entry__name" text="Item Name" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="item-entry__section">
+            <ui:Button name="item-entry__edit" text="Edit" />
+            <ui:Button name="item-entry__delete" text="Delete" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
