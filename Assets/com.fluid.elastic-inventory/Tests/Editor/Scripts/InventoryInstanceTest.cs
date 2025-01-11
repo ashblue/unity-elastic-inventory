@@ -152,6 +152,18 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 }
             }
 
+            public class ReadOnly_Items : InventoryInstanceTest {
+                [Test]
+                public void It_should_not_error_when_a_read_only_item_is_passed () {
+                    var inventory = Setup();
+                    var item = A.ItemEntryReadOnly().Build();
+
+                    Assert.DoesNotThrow(() => {
+                        inventory.AddEntry(item);
+                    });
+                }
+            }
+
             public class Unique_Items : InventoryInstanceTest {
                 [Test]
                 public void It_should_add_two_unique_items_as_individual_entries () {
@@ -412,42 +424,83 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
             }
         }
 
-        public class GetAll_Method : InventoryInstanceTest {
-            [Test]
-            public void It_should_return_all_added_item_entries () {
-                var definition = A.ItemDefinition().Build();
-                var inventory = Setup();
+        public class GetAll_Method {
+            public class Defaults : InventoryInstanceTest {
+                [Test]
+                public void It_should_return_all_added_item_entries () {
+                    var definition = A.ItemDefinition().Build();
+                    var inventory = Setup();
 
-                inventory.Add(definition);
-                var entries = inventory.GetAll();
+                    inventory.Add(definition);
+                    var entries = inventory.GetAll();
 
-                Assert.AreEqual(1, entries.Count);
+                    Assert.AreEqual(1, entries.Count);
+                }
+
+                [Test]
+                public void It_should_get_all_items_by_definition_type () {
+                    var definition = A.ItemDefinition().Build();
+                    var inventory = Setup();
+
+                    inventory.Add(definition);
+                    var entries = inventory.GetAll(typeof(IItemDefinition));
+
+                    Assert.AreEqual(1, entries.Count);
+                }
+
+                [Test]
+                public void It_should_get_all_items_by_category () {
+                    var category = "Weapon";
+                    var definitionA = A.ItemDefinition().WithCategory(category).Build();
+                    var definitionB = A.ItemDefinition().Build();
+                    var inventory = Setup();
+
+                    inventory.Add(definitionA);
+                    inventory.Add(definitionB);
+                    var entries = inventory.GetAll(category: category);
+
+                    Assert.AreEqual(1, entries.Count);
+                    Assert.AreEqual(definitionA, entries[0].Definition);
+                }
             }
 
-            [Test]
-            public void It_should_get_all_items_by_definition_type () {
-                var definition = A.ItemDefinition().Build();
-                var inventory = Setup();
+            public class WithCustomData : InventoryInstanceTest {
+                public class TEST_ItemEntryCustom : ItemEntryBase {
+                }
 
-                inventory.Add(definition);
-                var entries = inventory.GetAll(typeof(IItemDefinition));
+                public class TEST_ItemEntryDataResolverCustom : ItemEntryDataResolverBase<TEST_ItemEntryCustom> {
+                }
 
-                Assert.AreEqual(1, entries.Count);
-            }
+                public class TEST_ItemDefinitionCustom : ItemDefinitionBase {
+                    public override string DisplayName { get; }
+                    public override string Category { get; }
 
-            [Test]
-            public void It_should_get_all_items_by_category () {
-                var category = "Weapon";
-                var definitionA = A.ItemDefinition().WithCategory(category).Build();
-                var definitionB = A.ItemDefinition().Build();
-                var inventory = Setup();
+                    public override IItemEntryDataResolver DataResolver => new TEST_ItemEntryDataResolverCustom();
 
-                inventory.Add(definitionA);
-                inventory.Add(definitionB);
-                var entries = inventory.GetAll(category: category);
+                    public override IItemEntry CreateItemEntry (IItemDatabase database, int quantity = 1, string id = null, int? createdAt = null, int? updatedAt = null) {
+                        // We have to initialize a new implementation of the entry here
+                        // This is because the database doesn't know about our custom entry type
+                        var entry = new TEST_ItemEntryCustom();
+                        entry.Setup(database, this, quantity, id, createdAt, updatedAt);
 
-                Assert.AreEqual(1, entries.Count);
-                Assert.AreEqual(definitionA, entries[0].Definition);
+                        return entry;
+                    }
+                }
+
+                [Test]
+                public void It_should_not_fail_on_a_custom_item_entry_type () {
+                    var definitionGeneric = A.ItemDefinition().Build();
+                    var definition = ScriptableObject.CreateInstance<TEST_ItemDefinitionCustom>();
+                    var inventory = Setup();
+
+                    inventory.Add(definitionGeneric);
+                    inventory.Add(definition);
+
+                    Assert.DoesNotThrow(() => {
+                        var entries = inventory.GetAll<TEST_ItemEntryCustom>();
+                        Assert.AreEqual(1, entries.Count);
+                    });
+                }
             }
         }
 

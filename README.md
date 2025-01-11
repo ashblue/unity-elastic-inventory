@@ -66,9 +66,9 @@ The above example assumes that you've created custom definitions and logic for y
     * [Example Store](#example-store)
 - [Documentation](#documentation)
     * [Inventory Instance](#inventory-instance)
-        + [Add item(s)](#add-item-s-)
-        + [Remove item(s)](#remove-item-s-)
-        + [Get item(s)](#get-item-s-)
+        + [Add item(s)](#add-items)
+        + [Remove item(s)](#remove-items)
+        + [Get item(s)](#get-items)
         + [Get All Items](#get-all-items)
         + [Has items](#has-items)
         + [Events](#events)
@@ -117,7 +117,7 @@ Elastic Inventory is used through [Unity's Package Manager](https://docs.unity3d
 
 Next you'll be greeted with a configuration wizard. Run it and you'll be able to create items by selecting the `ElasticInventory/Resources/ItemDatabase` asset and clicking the edit button. 
 
-Before you create an item, we recommend customizing the automatically generated item definition at `ElasticInventory/Resources/ItemDefinition` to your needs. This will allow you to add your own custom fields to items. Add a `cost` field to the auto generated definition.
+Before you create an item, we recommend customizing the automatically generated item definition at `ElasticInventory/ItemDefinition` to your needs. This will allow you to add your own custom fields to items. Add a `cost` field to the auto generated definition.
 
 ```C#
 public class ItemDefinition : ItemDefinitionBase {

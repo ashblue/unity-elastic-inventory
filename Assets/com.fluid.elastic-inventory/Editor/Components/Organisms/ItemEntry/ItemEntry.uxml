@@ -8,6 +8,7 @@
         </ui:VisualElement>
 
         <ui:VisualElement class="item-entry__section">
+            <ui:Label name="item-entry__category" text="Category" />
             <ui:Button name="item-entry__edit" text="Edit" />
             <ui:Button name="item-entry__delete" text="Delete" />
         </ui:VisualElement>

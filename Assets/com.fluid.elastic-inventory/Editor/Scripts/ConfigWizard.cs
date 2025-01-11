@@ -66,9 +66,15 @@ using CleverCrow.Fluid.ElasticInventory;
 
 [ItemDefinitionDetails(""Generic"")]
 public class ItemDefinition : ItemDefinitionBase {
+    [SerializeField]
+    string _displayName;
+
     [InventoryCategory]
     [SerializeField]
     int _category;
+
+    // You can override the display name if you want by hard coding it here
+    public override string DisplayName => _displayName;
 
     // You can hard set a category name here instead if you don't want it to be selectable in the inspector
     public override string Category => GetCategoryByIndex(_category);

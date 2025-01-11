@@ -15,6 +15,16 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
             title.bindingPath = "_displayName";
             title.Bind(new SerializedObject(definition));
 
+            var category = _container.Q<Label>("item-entry__category");
+            category.text = definition.Category;
+            category.bindingPath = "_category";
+            category.Bind(new SerializedObject(definition));
+            category.RegisterValueChangedCallback(
+                evt => {
+                    category.text = definition.Category;
+                }
+            );
+
             _container.Q<Button>("item-entry__edit").clicked += () => { Selection.activeObject = definition; };
 
             _container.Q<Button>("item-entry__delete").clicked += () => {
