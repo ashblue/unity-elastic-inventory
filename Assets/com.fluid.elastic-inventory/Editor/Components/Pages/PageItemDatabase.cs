@@ -95,7 +95,13 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
 
             var serializedObject = new SerializedObject(itemDefinition);
             var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
-            serializedObject.FindProperty("_displayName").stringValue = MakeSpacedWord(fileName);
+
+            // Set the display name to be the spaced version of the file name (if it exists)
+            var displayName = serializedObject.FindProperty("_displayName");
+            if (displayName != null) {
+                displayName.stringValue = MakeSpacedWord(fileName);
+            }
+
             // @TODO Duplicate IDs are inevitable due to object cloning, repair them automatically when refreshing asset references
             serializedObject.FindProperty("_id").stringValue = Guid.NewGuid().ToString();
             serializedObject.ApplyModifiedPropertiesWithoutUndo();
