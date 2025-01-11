@@ -8,7 +8,7 @@
     "inventory",
     "inventory management"
   ],
-  "oysterVersion": "3.0.0",
+  "oysterVersion": "3.0.2",
   "packageName": "com.fluid.elastic-inventory",
   "packageScope": "com.fluid",
   "unityVersion": "2022.2",
