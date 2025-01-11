@@ -182,9 +182,18 @@ namespace CleverCrow.Fluid.ElasticInventory {
             string category = null
         ) where T : IItemEntryReadOnly {
             var allEntries = new List<T>();
-            allEntries.AddRange(_uniqueEntries.Cast<T>());
-            allEntries.AddRange(_entries.Values.Cast<T>());
 
+            // Find valid entries from both unique and non-unique lists
+            foreach (var i in _uniqueEntries) {
+                if (i is T valid) allEntries.Add(valid);
+            }
+
+            foreach (var VARIABLE in _entries.Values) {
+                if (VARIABLE is T valid) allEntries.Add(valid);
+
+            }
+
+            // Include additional filters
             if (definitionType != null) {
                 allEntries = allEntries.Where(e => definitionType.IsInstanceOfType(e.Definition)).ToList();
             }
