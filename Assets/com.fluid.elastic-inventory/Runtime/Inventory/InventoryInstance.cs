@@ -35,13 +35,13 @@ namespace CleverCrow.Fluid.ElasticInventory {
             IItemEntryReadOnly entry;
             if (item.Unique) {
                 entry = item.CreateItemEntry(_database);
-                AddEntry((IItemEntry)entry);
+                AddEntryInternal((IItemEntry)entry);
             } else if (_entries.TryGetValue(item, out var existingEntry)) {
                 existingEntry.SetQuantity(existingEntry.Quantity + quantity);
                 entry = existingEntry;
             } else {
                 entry = item.CreateItemEntry(_database, quantity);
-                AddEntry((IItemEntry)entry);
+                AddEntryInternal((IItemEntry)entry);
             }
 
             Events.ItemAdded.Invoke(entry);
@@ -58,17 +58,17 @@ namespace CleverCrow.Fluid.ElasticInventory {
         public IItemEntryReadOnly AddEntry(IItemEntryReadOnly entry) {
             if (entry == null) return null;
 
-            // Unique items and items without existing quantities can be added directly
-            if (entry.Definition.Unique || !Has(entry.Definition)) {
-                AddEntry(entry as IItemEntry);
-                entry.UpdateTimeLogs();
-                return entry;
+            // Unique items and items without existing quantities can be added directly (unless they are read only)
+            if (entry is IItemEntry existingEntry && (existingEntry.Definition.Unique || !Has(existingEntry.Definition))) {
+                AddEntryInternal(existingEntry);
+                existingEntry.UpdateTimeLogs();
+                return existingEntry;
             }
 
             return Add(entry.Definition, entry.Quantity);
         }
 
-        private void AddEntry (IItemEntry entry) {
+        private void AddEntryInternal (IItemEntry entry) {
             if (entry.Definition.Unique) {
                 _uniqueEntries.Add(entry);
             } else {
@@ -160,7 +160,7 @@ namespace CleverCrow.Fluid.ElasticInventory {
                 var tmpEntry = resolver.Load(json, _database);
                 var entry = tmpEntry.Definition.DataResolver.Load(json, _database);
 
-                AddEntry(entry);
+                AddEntryInternal(entry);
             });
         }
 

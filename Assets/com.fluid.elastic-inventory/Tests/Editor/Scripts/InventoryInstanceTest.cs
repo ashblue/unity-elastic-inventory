@@ -152,6 +152,18 @@ namespace CleverCrow.Fluid.ElasticInventory.Testing {
                 }
             }
 
+            public class ReadOnly_Items : InventoryInstanceTest {
+                [Test]
+                public void It_should_not_error_when_a_read_only_item_is_passed () {
+                    var inventory = Setup();
+                    var item = A.ItemEntryReadOnly().Build();
+
+                    Assert.DoesNotThrow(() => {
+                        inventory.AddEntry(item);
+                    });
+                }
+            }
+
             public class Unique_Items : InventoryInstanceTest {
                 [Test]
                 public void It_should_add_two_unique_items_as_individual_entries () {
