@@ -66,6 +66,18 @@ namespace CleverCrow.Fluid.ElasticInventory.Editors {
                     EditorUtility.SetDirty(definition);
 
                     count++;
+                } else if (string.IsNullOrEmpty(definition.Id)) {
+                    var newId = System.Guid.NewGuid().ToString();
+                    Debug.LogWarning($"Empty ID in {path}. Randomizing the ID to {newId}.");
+
+                    var so = new SerializedObject(definition);
+                    var idField = so.FindProperty("_id");
+                    idField.stringValue = newId;
+
+                    so.ApplyModifiedProperties();
+                    EditorUtility.SetDirty(definition);
+
+                    count++;
                 } else {
                     ids.Add(definition.Id);
                 }
