@@ -1,0 +1,12 @@
+{
+  "name": "com.fluid.elastic-inventory",
+  "version": "0.0.0",
+  "displayName": "Elastic Inventory",
+  "description": "A simple inventory micro-framework built with extendability in mind",
+  "unity": "2022.2",
+  "dependencies": {
+      "com.fluid.simple-settings": "1.0.1",
+      "com.fluid.database": "2.1.0",
+      "com.fluid.unity-event-plus": "1.2.0"
+  }
+}
