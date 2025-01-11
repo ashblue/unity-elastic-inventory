@@ -22,7 +22,6 @@ UIElementsSchema/
 
 # Visual Studio cache directory
 .vs/
-.idea/
 
 # Gradle cache directory
 .gradle/
@@ -44,7 +43,6 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
-.vscode/
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -53,7 +51,6 @@ ExportedObj/
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
-mono_crash*
 
 # Builds
 *.apk
