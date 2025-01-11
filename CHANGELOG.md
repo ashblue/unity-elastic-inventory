@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/ashblue/unity-elastic-inventory/compare/v2.0.0...v2.0.1) (2025-01-11)
+
+
+### Bug Fixes
+
+* **item creation:** no longer crashes when `_displayName` field is missing ([672c064](https://github.com/ashblue/unity-elastic-inventory/commit/672c064e6ee4334cacf113d02d56450deb48b325))
+
 # [2.0.0](https://github.com/ashblue/unity-elastic-inventory/compare/v1.0.1...v2.0.0) (2025-01-11)
 
 

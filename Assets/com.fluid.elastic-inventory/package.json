@@ -1,6 +1,6 @@
 {
   "name": "com.fluid.elastic-inventory",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "displayName": "Elastic Inventory",
   "description": "A simple inventory micro-framework built with extendability in mind",
   "unity": "2022.2",
