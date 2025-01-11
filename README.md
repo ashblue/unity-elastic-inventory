@@ -345,6 +345,7 @@ inventory.Instance.Sort(
 );
 ```
 
+
 #### Saving and Loading
 
 You can save and load an inventory instance with the following snippets. This should only be done if you wish to create your own implementation of `InventoryInstance` without using the `InventoryHelper`. It's recommended you use the `InventoryHelper` class to save and load inventories for simplicity.
