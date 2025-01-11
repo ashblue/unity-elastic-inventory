@@ -6,7 +6,15 @@ namespace CleverCrow.Fluid.ElasticInventory {
         string _id;
 
         public string Id => _id;
+
+        /// <summary>
+        /// If you want live bindings to changes in the inventory database window you must have a field called _displayName for field serialization
+        /// </summary>
         public abstract string DisplayName { get; }
+
+        /// <summary>
+        /// If you want live bindings to changes in the inventory database window you must have a field called _category for field serialization
+        /// </summary>
         public abstract string Category { get; }
         public virtual bool Unique => false;
         public virtual IItemEntryDataResolver DataResolver { get; } = new ItemEntryDataResolver();
