@@ -6,6 +6,9 @@ namespace CleverCrow.Fluid.Examples {
     // to any item definition on the fly
     public abstract class ItemDefinitionFantasyBase : ItemDefinitionBase {
         [SerializeField]
+        string _displayName;
+
+        [SerializeField]
         Sprite _image;
 
         [SerializeField]
@@ -15,6 +18,7 @@ namespace CleverCrow.Fluid.Examples {
         [SerializeField]
         string _description;
 
+        public override string DisplayName => _displayName;
         public Sprite Image => _image;
         public int Cost => _cost;
         public string Description => _description;
