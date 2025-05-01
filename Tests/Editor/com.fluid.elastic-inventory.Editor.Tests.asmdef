@@ -1,0 +1,28 @@
+{
+    "name": "com.fluid.elastic-inventory.Editor.Tests",
+    "rootNamespace": "",
+    "references": [
+        "com.fluid.elastic-inventory",
+        "com.fluid.elastic-inventory.Editor",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "com.fluid.database",
+        "com.fluid.unity-event-plus"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "NSubstitute.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

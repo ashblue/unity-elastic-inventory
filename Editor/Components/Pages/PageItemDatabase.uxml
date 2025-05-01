@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="./PageItemDatabase.uss" />
+
+    <ui:VisualElement class="toolbar">
+        <ui:Label name="title" class="toolbar__title" text="Lorem Ipsum" />
+        <ui:VisualElement name="search" />
+        <ui:VisualElement name="add" />
+        <ui:VisualElement name="category" />
+    </ui:VisualElement>
+
+    <ui:ScrollView>
+        <ui:VisualElement class="table" name="table" />
+    </ui:ScrollView>
+</ui:UXML>
