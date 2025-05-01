@@ -288,18 +288,18 @@ Several events will automatically fire whenever an inventory is edited. This is 
 
 ```C#
 // Subscribe to item added event
-inventory.Instance.ItemAdded.AddListener((item) => {
+inventory.Instance.Events.ItemAdded.AddListener((item) => {
     Debug.Log("Item added: " + item.Definition.DisplayName);
 });
 
 // Subscribe to item removed event
-inventory.Instance.ItemRemoved.AddListener((item) => {
+inventory.Instance.Events.ItemRemoved.AddListener((item) => {
     Debug.Log("Item removed: " + item.Definition.DisplayName);
 });
 
 // Subscribe to item quantity changed event
 // Note this will fire when an item is added or removed
-inventory.Instance.ItemChanged.AddListener((item) => {
+inventory.Instance.Events.ItemChanged.AddListener((item) => {
     Debug.Log("Item quantity changed: " + item.Definition.DisplayName);
 });
 ```
